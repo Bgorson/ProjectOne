@@ -16,6 +16,7 @@
 <body>
         <h1>Welcome to My Awesome App</h1>
         <input type="text" class="form-control" id="name" placeholder="Enter name">
+        <input type="text" class="form-control" id="location" placeholder="Enter location">
         <button id= "submit">Become a User</button>
 
         <div>Here are all the users</div>
@@ -38,26 +39,31 @@
         var database = firebase.database();
         var userRef= database.ref("/users/")
 
-   function setUserInfo(name) {
+   function setUserInfo(name,location) {
     database.ref('users/').push({
-      username: name,
-    
- 
+      groupname: name,
+      destination:location  
     });
   }
-  var userNumber=0
+
   $("#submit").on("click",function(){
     event.preventDefault();
     database.ref('/users/').once('value').then(function (snapshot) {
-        setUserInfo(($("#name").val()))
-       userNumber+=1
+        setUserInfo(($("#name").val()), $("#location").val())
+  
       });
   })
   var userList;
-  database.ref('/users/').once('value').then(function (snapshot) {
-      console.log(snapshot.val())
-     userList=snapshot.val();
-     $("#userList").text(JSON.stringify(userList))
+  var place;
+  database.ref('/users/').on("child_added",function (snapshot) {
+    var newDiv= $("<div>")
+    var uniqueKey= (snapshot.key)
+     console.log(snapshot.val())
+     userList=snapshot.val().groupname;
+     place=snapshot.val().destination;
+     $(newDiv).append(userList)
+     $(newDiv).append("---------"+ place)
+     $("#userList").append(newDiv)
     })
 
 
