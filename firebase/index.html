@@ -48,11 +48,9 @@
 
   $("#submit").on("click",function(){
     event.preventDefault();
-    database.ref('/users/').once('value').then(function (snapshot) {
         setUserInfo(($("#name").val()), $("#location").val())
-  
-      });
-  })
+    });
+
   var userList;
   var place;
   database.ref('/users/').on("child_added",function (snapshot) {
@@ -63,6 +61,7 @@
      place=snapshot.val().destination;
      $(newDiv).append(userList)
      $(newDiv).append("---------"+ place)
+     $(newDiv).append("---------Your Unique Group ID-----"+ uniqueKey)
      $("#userList").append(newDiv)
     })
 
