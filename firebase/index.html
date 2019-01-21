@@ -47,6 +47,7 @@
                 console.log(result.user)
                 console.log("success Google Account linked")
                   var token = result.credential.accessToken;
+                  console.log(token)
             }).catch(function(err){
                 console.log(err)
                 console.log("Failed")
