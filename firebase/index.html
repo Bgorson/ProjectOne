@@ -8,34 +8,77 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Firebase</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-       <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
 </head>
 
 <body>
         <h1>Welcome to My Awesome App</h1>
+        <button onclick="googleSignIn()">Google Signin</button>
         <input type="text" class="form-control" id="name" placeholder="Enter name">
         <input type="text" class="form-control" id="location" placeholder="Enter location">
         <button id= "submit">Become a User</button>
 
         <div>Here are all the users</div>
         <div id="userList"></div>
-
-
-
+        <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase-database.js"></script>
     <script>
- 
+
         // Initialize Firebase
         var config = {
-            apiKey: "AIzaSyD3dRRKSGSJS3qJd56tFw1bp88MSjs1me4",
-            authDomain: "project1-25274.firebaseapp.com",
-            databaseURL: "https://project1-25274.firebaseio.com",
-            projectId: "project1-25274",
-            storageBucket: "",
-            messagingSenderId: "754176438566"
-        };
+    apiKey: "AIzaSyAHx0C7Hk2TJHRI5iL9RMY6YuExixeUCTM",
+    authDomain: "project1-1a4da.firebaseapp.com",
+    databaseURL: "https://project1-1a4da.firebaseio.com",
+    projectId: "project1-1a4da",
+    storageBucket: "",
+    messagingSenderId: "803507948503"
+  };
         firebase.initializeApp(config);
+        //sign in info
+
+        googleSignIn= ()=> {
+            base_provider= new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(base_provider).then(function(result){
+                console.log(result)
+                console.log(result.user)
+                console.log("success Google Account linked")
+                  var token = result.credential.accessToken;
+            }).catch(function(err){
+                console.log(err)
+                console.log("Failed")
+            })
+        }
+
+
+
+        
+//         firebase.auth().signInWithPopup(provider).then(function(result) {
+//   // This gives you a Google Access Token. You can use it to access the Google API.
+
+//   console.log(token)
+//   // The signed-in user info.
+//   var user = result.user;
+//   console.log(user)
+//   // ...
+// }).catch(function(error) {
+//   // Handle Errors here.
+//   var errorCode = error.code;
+//   var errorMessage = error.message;
+//   // The email of the user's account used.
+//   var email = error.email;
+//   // The firebase.auth.AuthCredential type that was used.
+//   var credential = error.credential;
+//   // ...
+// });
+// console.log(user)
+
+
+
+
         var database = firebase.database();
         var userRef= database.ref("/users/")
 
