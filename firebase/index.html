@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Firebase</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
 </head>
@@ -16,6 +16,7 @@
 <body>
         <h1>Welcome to My Awesome App</h1>
         <button onclick="googleSignIn()">Google Signin</button>
+        <a href='#' id='authorize-button' onclick='handleAuthClick();'>Create Event</a>
         <input type="text" class="form-control" id="name" placeholder="Enter name">
         <input type="text" class="form-control" id="location" placeholder="Enter location">
         <button id= "submit">Become a User</button>
@@ -44,8 +45,9 @@
             base_provider= new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(base_provider).then(function(result){
                 console.log(result)
-                console.log(result.user)
+                console.log(result.user.email)
                 console.log("success Google Account linked")
+
                   var token = result.credential.accessToken;
                   console.log(token)
             }).catch(function(err){
@@ -54,9 +56,106 @@
             })
         }
 
+        var clientId = '803507948503-kv0ma5jqja3ftnob7mmpu6pgsfdqkhv4.apps.googleusercontent.com';
+      var apiKey = 'AIzaSyAHx0C7Hk2TJHRI5iL9RMY6YuExixeUCTM';
+
+      // Array of API discovery doc URLs for APIs used by the quickstart
+      var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
+
+      // Authorization scopes required by the API; multiple scopes can be
+      // included, separated by spaces.
+      var scopes = "https://www.googleapis.com/auth/calendar";
+
+      // Check to see if user logged in and authorize usage of calendar
+
+      function handleClientLoad() {
+  gapi.client.setApiKey(apiKey);
+  window.setTimeout(checkAuth,1);
+  checkAuth();
+}
+
+function checkAuth() {
+  gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true},
+      handleAuthResult);
+}
+
+function handleAuthResult(authResult) {
+  var authorizeButton = document.getElementById('authorize-button');
+  if (authResult) {
+    authorizeButton.style.visibility = 'hidden';
+    makeApiCall();
+  } else {
+    authorizeButton.style.visibility = '';
+    authorizeButton.onclick = handleAuthClick;
+   }
+}
+
+function handleAuthClick(event) {
+  gapi.auth.authorize(
+      {client_id: clientId, scope: scopes, immediate: false},
+      handleAuthResult);
+  return false;
+}
+
+//Make the API calls
 
 
-        
+// function makeApiCall() {
+//   gapi.client.load('calendar', 'v3', function() {
+//     var request = gapi.client.calendar.events.list({
+//       'calendarId': 'primary'
+//     });
+          
+//     request.execute(function(resp) {
+//       for (var i = 0; i < resp.items.length; i++) {
+//         var li = document.createElement('li');
+//         li.appendChild(document.createTextNode(resp.items[i].summary));
+//         document.getElementById('events').appendChild(li);
+//       }
+//     });
+//   });
+// }
+function makeApiCall() {
+    function authenticate() {
+    return gapi.auth2.getAuthInstance()
+        .signIn({scope: "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"})
+        .then(function() { console.log("Sign-in successful"); },
+              function(err) { console.error("Error signing in", err); });
+  }
+  function loadClient() {
+    return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/calendar/v3/rest")
+        .then(function() { console.log("GAPI client loaded for API"); },
+              function(err) { console.error("Error loading GAPI client for API", err); });
+  }
+  // Make sure the client is loaded and sign-in is complete before calling this method.
+  function execute() {
+    return gapi.client.calendar.events.insert({
+      "calendarId": "Test",
+      "resource": {
+        "end": {
+          "date": "2019-01-22"
+        },
+        "start": {
+          "date": "2019-01-23"
+        }
+      }
+    })
+        .then(function(response) {
+                // Handle the results here (response.result has the parsed body).
+                console.log("Response", response);
+              },
+              function(err) { console.error("Execute error", err); });
+  }
+  gapi.load("client:auth2", function() {
+    gapi.auth2.init({client_id: clientId});
+  });
+
+}
+
+
+
+
+
 //         firebase.auth().signInWithPopup(provider).then(function(result) {
 //   // This gives you a Google Access Token. You can use it to access the Google API.
 
