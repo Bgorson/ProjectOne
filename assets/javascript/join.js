@@ -22,8 +22,8 @@ $(".getLocal").on("click",function(){
     storedEvents=(JSON.parse(storedEvents))
     console.log(storedEvents[0].eventId)
     for (i=0;i<storedEvents.length;i++){
-      var div= $("<div>"+storedEvents[i].eventId+  "<div>");
-        $("body").append(div)
+      var div= $("<div class= 'btnText'>"+storedEvents[i].eventId+  "<div>");
+        $(".buttons").append(div)
     }
   
   })
