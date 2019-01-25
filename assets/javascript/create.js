@@ -1,15 +1,4 @@
-//Create fields for group creation
 
-//name field
-
-//sDate field
-
-//eDate field
-
-//location field
-
-
-//submit button
 
 
 
@@ -26,10 +15,10 @@
 
   
 var database = firebase.database();
-var groupRef= database.ref("/group/")
+var groupRef= database.ref("group/")
 
 function setGroupInfo(groupName,location,startDate,endDate) {
-database.ref('users/').push({
+database.ref('group/').push({
 name: groupName,
 loc:location,
 sDate:startDate,
@@ -38,5 +27,21 @@ events: {}
 });
 } 
 
-setGroupInfo('Group','Chicago','Jan1','Jan2')
+// setGroupInfo('Group','Chicago','Jan1','Jan2')
 // setGroupInfo($("$name".val()), $("#location").val(),$("#sDate".val()),$("#eDate".val()))
+
+
+//name field
+
+//sDate field
+
+//eDate field
+
+//location field
+
+
+//submit button
+
+$("#create").on("click",function(){
+  setGroupInfo(document.getElementById("name").value, document.getElementById("location").value,document.getElementById("start").value,document.getElementById("end").value)
+})
