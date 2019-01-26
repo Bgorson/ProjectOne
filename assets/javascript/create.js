@@ -45,8 +45,9 @@ var state = document.getElementById("state").value;
   var info = {
     groupName: name,
   }
+  console.log(info)
   eventInfo.push(info);
-  localStorage.setItem("groupName",JSON.stringify(eventInfo));
+  localStorage.setItem("groupName",name);
 })
 
 
