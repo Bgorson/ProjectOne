@@ -28,29 +28,15 @@ function setGroupInfo(groupName, location, startDate, endDate) {
 
 
 //name field
-var name = document.getElementById("name");
+var name = document.getElementById("name").value;
 //sDate field
-var sDate = document.getElementById("start");
+var sDate = document.getElementById("start").value;
 //eDate field
-var eDate = document.getElementById("end");
+var eDate = document.getElementById("end").value;
 //location field
-var loc = document.getElementById("location");
+var loc = document.getElementById("location").value;
 
 //submit button
-
-
-function setGroupInfo(groupName,location,startDate,endDate) {
-database.ref('users/').push({
-name: groupName,
-loc:location,
-sDate:startDate,
-eDate:endDate,
-events: {}
-});
-} 
-
-setGroupInfo('Group','Chicago','Jan1','Jan2')
-
 $("#create").on("click", function () {
   setGroupInfo(name, loc, sDate,eDate)
 })
