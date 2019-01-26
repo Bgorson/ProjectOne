@@ -40,13 +40,7 @@ var state = document.getElementById("state").value;
 
 
  setGroupInfo(name, city,state, sDate,eDate)
-  
-
-  var info = {
-    groupName: name,
-  }
-  console.log(info)
-  eventInfo.push(info);
+  //putting group name in local storage
   localStorage.setItem("groupName",name);
 })
 
