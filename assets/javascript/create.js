@@ -13,19 +13,19 @@ firebase.initializeApp(config);
 var database = firebase.database();
 var groupRef = database.ref("group/")
 
-function setGroupInfo(groupName, location, startDate, endDate) {
+function setGroupInfo(groupName, eventCity,eventState, startDate, endDate) {
   database.ref('group/' + groupName).set({
     name: groupName,
-    loc: location,
+    city: eventCity,
+    state: eventState,
     sDate: startDate,
     eDate: endDate,
     events: {}
   });
 }
 
-// setGroupInfo('Group','Chicago','Jan1','Jan2')
-// setGroupInfo($("$name".val()), $("#location").val(),$("#sDate".val()),$("#eDate".val()))
-
+//Local Storage
+var eventInfo = [];
 
 //name field
 var name = document.getElementById("name").value;
@@ -34,9 +34,20 @@ var sDate = document.getElementById("start").value;
 //eDate field
 var eDate = document.getElementById("end").value;
 //location field
-var loc = document.getElementById("location").value;
-
+var city = document.getElementById("city").value;
+var state = document.getElementById("state").value;
 //submit button
+
 $("#create").on("click", function () {
-  setGroupInfo(name, loc, sDate,eDate)
+  console.log(name)
+  setGroupInfo(name, city,state, sDate,eDate)
+  
+
+  var info = {
+    groupName: name,
+  }
+  eventInfo.push(info);
+  localStorage.setItem("groupName",JSON.stringify(eventInfo));
 })
+
+
