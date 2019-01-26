@@ -1,15 +1,16 @@
 //Create fields for group creation
 
 //name field
-
+var name = document.getElementById("name");
 //sDate field
-
+var sDate = document.getElementById("start");
 //eDate field
-
+var eDate = document.getElementById("end");
 //location field
-
+var loc = document.getElementById("rate");
 
 //submit button
+
 
 
 
