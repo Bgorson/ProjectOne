@@ -3,10 +3,11 @@
 //Get Lat/Long from AJAX Call
 
 //create Map with location
-
+var eLat=41.8965
+var eLng= -87.6188
 function initMap() {
   // The location of 
-  var location = {lat: 41.8965, lng: -87.6188};
+  var location = {lat: eLat, lng: eLng };
   // The map, centered
   var map = new google.maps.Map(
       document.getElementById('map'), {zoom: 12, center: location});
@@ -19,19 +20,12 @@ function initMap() {
 // firebase Info
 
 var database = firebase.database();
-var name
-var storedEvents = (localStorage.getItem("joinGroup"));
-console.log(storedEvents)
-storedEvents=(JSON.parse(storedEvents))
-name = storedEvents[0].eventId
+var name = (localStorage.getItem("groupName"));
 console.log(name)
-//Need to verify that I can connect to correct firebase
-var groupRef= database.ref('group/another group')
-groupRef.on('value',function(snapshot){
-  console.log(snapshot.val())
-})
 
+console.log(database.ref('group/'+ name))
 
+//Put in response.Lat.long variable and line them uo  
 
 
 
