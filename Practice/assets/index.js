@@ -2,7 +2,7 @@ function populateTable() {
 var location ='denver'
 var startDate= '2019-02-20T00%3A00%3A00Z'
 var endDate = '2019-02-21T00%3A00%3A00Z'
-var QueryURL= 'https://www.eventbriteapi.com/v3/events/search/?q=coding&location.address='+location+'&start_date.range_start='+startDate+'&start_date.range_end='+endDate+'&token=TPQYCAU53IO2TT2FQOOY'
+var QueryURL= 'https://www.eventbriteapi.com/v3/events/search/?q=coding&location.address='+location+'&start_date.range_start='+startDate+'&start_date.range_end='+endDate+'&token=3RS5KP3QRP5LW3OTLAWF'
 
 console.log(QueryURL)
 $.ajax({
