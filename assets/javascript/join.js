@@ -9,7 +9,7 @@ var config = {
 };
 firebase.initializeApp(config);
 
-
+console.log(currentGroup)
 var database = firebase.database();
 var groupRef = database.ref("group/")
 
