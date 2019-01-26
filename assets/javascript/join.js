@@ -37,7 +37,7 @@ if (eventInfo == undefined) {
 //   localStorage.setItem("groupName",JSON.stringify(eventInfo));
 //   })
 
-$(".getLocal").on("click", function() {
+$("#join").on("click", function() {
   var storedEvents = localStorage.getItem("groupName");
   console.log(storedEvents);
 
