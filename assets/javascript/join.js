@@ -8,6 +8,7 @@ var config = {
   storageBucket: "project1-1a4da.appspot.com",
   messagingSenderId: "803507948503"
 };
+
 firebase.initializeApp(config);
 
 
