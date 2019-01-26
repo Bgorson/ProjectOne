@@ -28,7 +28,7 @@ console.log(name)
 //Need to verify that I can connect to correct firebase
 var groupRef= database.ref('group/another group')
 groupRef.on('value',function(snapshot){
-  console.log(snapshot)
+  console.log(snapshot.val())
 })
 
 
