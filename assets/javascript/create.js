@@ -26,7 +26,7 @@ function setGroupInfo(groupName, eventCity,eventState, startDate, endDate) {
 
 //Local Storage
 var eventInfo = [];
-
+$("#create").on("click", function () {
 //name field
 var name = document.getElementById("name").value;
 //sDate field
@@ -38,9 +38,8 @@ var city = document.getElementById("city").value;
 var state = document.getElementById("state").value;
 //submit button
 
-$("#create").on("click", function () {
-  console.log(name)
-  setGroupInfo(name, city,state, sDate,eDate)
+
+ setGroupInfo(name, city,state, sDate,eDate)
   
 
   var info = {
