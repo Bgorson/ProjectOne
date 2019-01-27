@@ -13,17 +13,16 @@ body, .card, #submit{
 .navbar-nav {
     margin-left: auto;
     font-weight: bold;
+    font-size: 1.1em;
 }
 
-.card {
-    margin-top: 1em;
+.nav-item {
+    padding-right: 1.5em;
 }
 
 .card-header {
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-weight: bold;
-    color: white;
-    background:#56b4d0;
 }
 .card-body {
     font-size: 1.1em;
@@ -32,4 +31,13 @@ body, .card, #submit{
 #submit {
     color: white;
     background:#56b4d0;
+}
+.top-card {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1em;
+}
+.card {
+    margin-bottom: 1em;
 }
