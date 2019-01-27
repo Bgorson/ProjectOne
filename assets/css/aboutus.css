@@ -1,8 +1,21 @@
+
+.container-fullwidth {
+    padding-top: 1em;
+    
+}
+
 .navbar-dark {
     background:#5bc0de;
+}
+
+.navbar-toggler-icon{
     color: white;
 }
 
-.navbar-toggler{
-    
+.navbar-nav {
+    margin-left: auto;
+}
+
+.card {
+    margin-top: 1em;
 }
