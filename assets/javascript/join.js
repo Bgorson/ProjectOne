@@ -36,13 +36,20 @@ $(".getLocal").on("click", function() {
   }
 });
 
-$("#join").on("click", function() {
+$("#join").on("click", function() { // pulls from group object from firebase
  var formInput = $(".form-control").val();
  groupRef.on('value',function(snapshot){
-   console.log(snapshot.val());
+   //console.log(snapshot.val());
    var databaseGroup = snapshot.val();
    if (databaseGroup[formInput]) {
-    console.log("here")
+     var groupSelected = databaseGroup[formInput]
+     $(".display-groups").text(groupSelected.name)
+
+     $('.display-groups').click(function(){
+      window.location.href='mainhub.html';
+   })
+     console.log(groupSelected);
+    //console.log("here")
      
    } else {
      console.log("not here")
