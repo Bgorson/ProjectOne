@@ -37,6 +37,17 @@ $(".getLocal").on("click", function() {
 });
 
 $("#join").on("click", function() {
+ var formInput = $(".form-control").val();
+ groupRef.on('value',function(snapshot){
+   console.log(snapshot.val());
+   var databaseGroup = snapshot.val();
+   if (databaseGroup[formInput]) {
+    console.log("here")
+     
+   } else {
+     console.log("not here")
+   }
+ })
   var searchLocalStorageName = localStorage.getItem("groupName");
   console.log(searchLocalStorageName);
 
