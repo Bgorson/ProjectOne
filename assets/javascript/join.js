@@ -9,7 +9,7 @@ var config = {
 };
 firebase.initializeApp(config);
 
-console.log(currentGroup)
+//========Firebase Info & Local Storage===========================================================
 var database = firebase.database();
 var groupRef = database.ref("group/")
 
@@ -36,12 +36,14 @@ $(".getLocal").on("click", function() {
   }
 });
 
+//=====User input Group name to pull from Firebase and load in div===============================
+
 $("#join").on("click", function() { // pulls from group object from firebase
  var formInput = $(".form-control").val();
  groupRef.on('value',function(snapshot){
    //console.log(snapshot.val());
    var databaseGroup = snapshot.val();
-   if (databaseGroup[formInput]) {
+   if (databaseGroup[formInput]) { // checks if input is in firebase
      var groupSelected = databaseGroup[formInput] // <-- This contains all object information about Group. Can pass to mainhub
      $(".display-groups").text(groupSelected.name)
 
