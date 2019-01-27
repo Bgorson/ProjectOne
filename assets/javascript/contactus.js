@@ -9,16 +9,11 @@ var config = {
 };
 firebase.initializeApp(config);
 
-
 var database = firebase.database();
 
-///Need to update for Contact us form
 var contactRef = database.ref("contact/")
 
-///ATTTENTION NEED TO UPDATE HERE
 function collectContact(groupName, yourName, yourEmail, yourNumber, yourComments) {
-
-  ///Need to update for Contact us form
   database.ref('contact/').push({
     gName: groupName,
     yName: yourName,
@@ -33,17 +28,20 @@ function collectContact(groupName, yourName, yourEmail, yourNumber, yourComments
 $("#submit").on("click", function () {
 event.preventDefault();
 console.log("hi");
-  //name field
+
 var gName = document.getElementById("group-name").value;
-console.log(gName);
-//sDate field
 var yName = document.getElementById("your-name").value;
-//eDate field
 var yEmail = document.getElementById("your-email").value;
-//location field
 var yNumber = document.getElementById("your-number").value;
 var yComments = document.getElementById("comments").value;
- collectContact(gName, yName, yEmail, yNumber, yComments)
+ 
+collectContact(gName, yName, yEmail, yNumber, yComments)
+
+ $("#group-name").val("");
+ $("#your-name").val("");
+ $("#your-email").val("");
+ $("#your-number").val("");
+ $("#comments").val("");
 }) 
 
 

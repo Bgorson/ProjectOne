@@ -11,3 +11,8 @@ document.getElementById("join").onclick = function() {
 
     location.href = "./join.html";
 }
+
+
+// we have the id the group
+// make a call to firebase with id 
+// we get the group object back

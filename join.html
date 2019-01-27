@@ -18,7 +18,7 @@
 <!--ATTENTION Wanetd your opinions about the nav color that exactly matched submit buttons-->
 
  <!--Navbar and Hamburger Menu Added-->
-  <div class="container-fullwidth p-2">
+  <div class="container-fullwidth ">
     <nav class="navbar navbar-expand-lg navbar-dark" style="background:#17a2b8">
       <a class="navbar-brand text-white" style="text-align: center; font-weight: bold">Socialite: Join Group</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
@@ -78,7 +78,22 @@
     </div>
   </div>
 
- 
+  <div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div>
+                <br>
+                <div class="buttons" style="text-align:center" style="color:white">
+
+                   <!-- ATTENTION: why do we have two button classes for the search and display? Shouldn't the results be automatically displayed once the user presses search? -->
+                    <button eventId= "GroupIDTest" type="button" class="joinGroup btn btn-primary">Add information to Local Storage</button>
+                    <button type="button" class="getLocal btn btn-primary">Displays Local Storage</button>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+
  <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
  <script src="./assets/javascript/join.js"></script>
 </body>
