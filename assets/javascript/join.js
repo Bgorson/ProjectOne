@@ -36,9 +36,11 @@ $(".getLocal").on("click", function() {
   }
 });
 
+
 //=====User input Group name to pull from Firebase and load in div===============================
 
 $("#join").on("click", function() { // pulls from group object from firebase
+
  var formInput = $(".form-control").val();
  groupRef.on('value',function(snapshot){
    //console.log(snapshot.val());
@@ -47,17 +49,19 @@ $("#join").on("click", function() { // pulls from group object from firebase
      var groupSelected = databaseGroup[formInput] // <-- This contains all object information about Group. Can pass to mainhub
      $(".display-groups").text(groupSelected.name)
 
+     console.log(groupSelected.name);
+     var groupName = groupSelected.name
+     localStorage.setItem("groupName", JSON.stringify(groupName))
      $('.display-groups').click(function(){
       window.location.href='mainhub.html';
    })
-     console.log(groupSelected);
+
     //console.log("here")
      
    } else {
      console.log("not here")
    }
  })
-  var searchLocalStorageName = localStorage.getItem("groupName");
-  console.log(searchLocalStorageName);
+
 
 });
