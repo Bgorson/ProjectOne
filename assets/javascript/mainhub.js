@@ -3,36 +3,49 @@
 //Get Lat/Long from AJAX Call
 
 //create Map with location
-var eLat=41.8965
-var eLng= -87.6188
-function initMap() {
-  // The location of 
-  var location = {lat: eLat, lng: eLng };
-  // The map, centered
-  var map = new google.maps.Map(
-      document.getElementById('map'), {zoom: 12, center: location});
-  // The marker, positioned at
-  var marker = new google.maps.Marker({position: location, map: map});
-}
-
+// var eLat=41.8965
+// var eLng= -87.6188
+// function initMap() {
+//   // The location of 
+//   var location = {lat: eLat, lng: eLng };
+//   // The map, centered
+//   var map = new google.maps.Map(
+//       document.getElementById('map'), {zoom: 12, center: location});
+//   // The marker, positioned at
+//   var marker = new google.maps.Marker({position: location, map: map});
+// }
 
 
 // firebase Info
-
+var city
+var startDate
+var endDate
 var database = firebase.database();
 var name = (localStorage.getItem("groupName"));
 console.log(name)
+var groupRef = (database.ref('group/'+ name));
+groupRef.on("value", function(snapshot){
+  city = (snapshot.val().city);
+  startDate = (snapshot.val().sDate) + "T00%3A00%3A00Z";
+  endDate = (snapshot.val().eDate) + "T00%3A00%3A00Z";
+  console.log(city);
+  console.log(startDate);
+  console.log(endDate);
+  populateTable();
+});
 
-console.log(database.ref('group/'+ name))
 
 //Put in response.Lat.long variable and line them uo  
 function populateTable() {
-  var location ='denver'
-  var startDate= '2019-02-20T00%3A00%3A00Z'
-  var endDate = '2019-02-21T00%3A00%3A00Z'
-  var QueryURL= 'https://www.eventbriteapi.com/v3/events/search/?q=coding&location.address='+location+'&start_date.range_start='+startDate+'&start_date.range_end='+endDate+'&token=3RS5KP3QRP5LW3OTLAWF'
+  // var location ='denver'
+
+  
+  // console.log(city);
+ 
+  var QueryURL= 'https://www.eventbriteapi.com/v3/events/search/?q=coding&location.address='+city+'&start_date.range_start='+startDate+'&start_date.range_end='+endDate+'&token=3RS5KP3QRP5LW3OTLAWF'
   
   console.log(QueryURL)
+
   $.ajax({
       url: QueryURL,
       method: "GET"
@@ -58,7 +71,7 @@ function populateTable() {
     });
   }
   
-  populateTable();
+  
 
 
 

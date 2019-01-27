@@ -14,7 +14,7 @@ var database = firebase.database();
 var groupRef = database.ref("group/")
 
 function setGroupInfo(groupName, eventCity,eventState, startDate, endDate) {
-  database.ref('group/' + groupName).push({
+  database.ref('group/' + groupName).set({
     name: groupName,
     city: eventCity,
     state: eventState,
