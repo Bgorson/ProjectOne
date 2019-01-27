@@ -1,6 +1,10 @@
-container-fullwidth {
-    padding-top: 1em;
-    
+body, .card, .nav{
+    font-family: "Font Awesome 5 Free";
+    font-size: 1.1em;
+}
+
+.container-fullwidth {
+    padding-top: 1em; 
 }
 
 .navbar-dark {
