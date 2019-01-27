@@ -3,17 +3,17 @@
 //Get Lat/Long from AJAX Call
 
 //create Map with location
-// var eLat=41.8965
-// var eLng= -87.6188
-// function initMap() {
-//   // The location of 
-//   var location = {lat: eLat, lng: eLng };
-//   // The map, centered
-//   var map = new google.maps.Map(
-//       document.getElementById('map'), {zoom: 12, center: location});
-//   // The marker, positioned at
-//   var marker = new google.maps.Marker({position: location, map: map});
-// }
+var eLat
+var eLng
+function initMap() {
+  // The location of 
+  var location = {lat: eLat, lng: eLng };
+  // The map, centered
+  var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 12, center: location});
+  // The marker, positioned at
+  var marker = new google.maps.Marker({position: location, map: map});
+};
 
 
 // firebase Info
@@ -52,7 +52,7 @@ function populateTable() {
     }).then(function(response) {
         console.log(response)
       // Create a new table row element
-      for (i=0;i<response.events.length;i++){
+      for (i=0;i<1;i++){
           
       var tRow = $("<tr>");
   
@@ -62,14 +62,37 @@ function populateTable() {
       var Tab2 = $("<td>").text(response.events[i].description.text);
       var Tab3 = $("<td>").text(response.events[i].start.local);
       var Tab4 = $("<td>").text(response.events[i].id);
-        
+      var mapDiv = $("<div id='map'>");
+      var mapButton = $("<button id='mapButton' venue=" + response.events[i].venue_id + ">").text("Map");
       // Append the newly created table data to the table row
       tRow.append(Tab1,Tab2,Tab3,Tab4);
+      
+     
+      // tRow.append(mapDiv);
       // Append the table row to the table body
+      // initMap();
       $("tbody").append(tRow);
+      $("tbody").append(mapButton);
+      $("tbody").append(mapDiv);
       }
+
     });
-  }
+  };
+  $(document).on('click','#mapButton', function(){
+    var venueid = $(this).attr("venue");
+    var QueryURL= 'https://www.eventbriteapi.com/v3/venues/' + venueid + '/?token=TPQYCAU53IO2TT2FQOOY';
+    $.ajax({
+      url: QueryURL,
+      method: "GET"
+    }).then(function(response) {
+        console.log(response)
+    eLat = parseFloat(response.latitude);
+    eLng = parseFloat(response.longitude);
+    console.log(eLat);
+    console.log(eLng);
+    initMap();
+  });
+});
   
   
 
