@@ -1,4 +1,6 @@
-
+body{
+    font-family: "Font Awesome 5 Free";
+}
 .container-fullwidth {
     padding-top: 1em;
 }
@@ -20,4 +22,10 @@
 
 .card {
     margin-top: 1em;
+}
+.buttons{
+    text-align:center;
+}
+.secondary-title{
+font-style: italic;   
 }

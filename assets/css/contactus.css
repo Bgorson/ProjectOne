@@ -1,21 +1,35 @@
+body, .card, #submit{
+    font-family: "Font Awesome 5 Free";
+}
 
 .container-fullwidth {
-    padding-top: 1em;
-    
+    padding-top: 1em; 
 }
 
 .navbar-dark {
-    background:#5bc0de;
-}
-
-.navbar-toggler-icon{
-    color: white;
+    background:#56b4d0;
 }
 
 .navbar-nav {
     margin-left: auto;
+    font-weight: bold;
 }
 
 .card {
     margin-top: 1em;
+}
+
+.card-header {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+    background:#56b4d0;
+}
+.card-body {
+    font-size: 1.1em;
+}
+
+#submit {
+    color: white;
+    background:#56b4d0;
 }
