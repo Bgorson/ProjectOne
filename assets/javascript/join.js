@@ -42,7 +42,7 @@ $("#join").on("click", function() { // pulls from group object from firebase
    //console.log(snapshot.val());
    var databaseGroup = snapshot.val();
    if (databaseGroup[formInput]) {
-     var groupSelected = databaseGroup[formInput]
+     var groupSelected = databaseGroup[formInput] // <-- This contains all object information about Group. Can pass to mainhub
      $(".display-groups").text(groupSelected.name)
 
      $('.display-groups').click(function(){
