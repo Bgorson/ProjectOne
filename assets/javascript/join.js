@@ -18,14 +18,14 @@ eventInfo = JSON.parse(eventInfo);
 if (eventInfo == undefined) {
   eventInfo = [];
 }
-$(document).on("click", ".joinGroup", function() {
+$(document).on("click", ".joinGroup", function () {
   var info = {
     eventId: $(this).attr("eventId")
   };
   localStorage.setItem("joinGroup", JSON.stringify(eventInfo));
 });
 
-$(".getLocal").on("click", function() {
+$(".getLocal").on("click", function () {
   var storedEvents = localStorage.getItem("joinGroup");
   console.log(storedEvents);
   storedEvents = JSON.parse(storedEvents);
@@ -39,29 +39,29 @@ $(".getLocal").on("click", function() {
 
 //=====User input Group name to pull from Firebase and load in div===============================
 
-$("#join").on("click", function() { // pulls from group object from firebase
+$("#join").on("click", function () { // pulls from group object from firebase
 
- var formInput = $(".form-control").val();
- groupRef.on('value',function(snapshot){
-   //console.log(snapshot.val());
-   var databaseGroup = snapshot.val();
-   if (databaseGroup[formInput]) { // checks if input is in firebase
-     var groupSelected = databaseGroup[formInput] // <-- This contains all object information about Group. Can pass to mainhub
-     $(".display-groups").text(groupSelected.name)
+  var formInput = $(".form-control").val();
+  groupRef.on('value', function (snapshot) {
+    //console.log(snapshot.val());
+    var databaseGroup = snapshot.val();
+    if (databaseGroup[formInput]) { // checks if input is in firebase
+      var groupSelected = databaseGroup[formInput] // <-- This contains all object information about Group. Can pass to mainhub
+      $(".display-groups").text(groupSelected.name)
 
-     console.log(groupSelected.name);
-     var groupName = groupSelected.name
-     localStorage.setItem("groupName", JSON.stringify(groupName))
-     $('.display-groups').click(function(){
-      window.location.href='mainhub.html';
-   })
+      console.log(groupSelected.name);
+      var groupName = groupSelected.name
+      localStorage.setItem("groupName", groupName)
+      $('.display-groups').click(function () {
+        window.location.href = 'mainhub.html';
+      })
 
-    //console.log("here")
-     
-   } else {
-     console.log("not here")
-   }
- })
+      //console.log("here")
+
+    } else {
+      console.log("not here")
+    }
+  })
 
 
 });
