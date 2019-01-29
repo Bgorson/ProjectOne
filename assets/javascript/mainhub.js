@@ -31,11 +31,11 @@ function initMap() {
 
     // Create new Google Map object for single canvas 
     map = new google.maps.Map(mapId, {
-      zoom: 15,
+      zoom: 14,
       // Use our LatLng array bellow
       center: new google.maps.LatLng(parseFloat(gps[0]), parseFloat(gps[1])),
       mapTypeId: 'roadmap',
-      mapTypeControl: true,
+      mapTypeControl: false,
       zoomControlOptions: {
         position: google.maps.ControlPosition.RIGHT_TOP
       }
@@ -95,11 +95,11 @@ function populateTable() {
       var Tab2 = $("<td>").text(response.events[i].description.text);
       var Tab3 = $("<td>").text(response.events[i].start.local);
       var popular = $("<button class='popular' eventId=" + response.events[i].id + "'>").text("Interested?")
-     
+
 
       var mapButton = $("<button class='mapButton' venue=" + response.events[i].venue_id + ">").text("Map");
 
-   
+
 
       var calendarButton = $("<button class='calendarButton' eventId=" + response.events[i].id + "' >").text("Add to Calendar");
 
@@ -140,38 +140,45 @@ $(document).on('click', '.mapButton', function () {
 
 //Adding the Calendar
 
-$(document).on("click", ".calendarButton", function() {
-  document.getElementsByClassName('calendarButton')[0].appendChild(createCalendar({data:{title:"this is the title of my event", start: new Date(), duration: 90}}));
+$(document).on("click", ".calendarButton", function () {
+  document.getElementsByClassName('calendarButton')[0].appendChild(createCalendar({
+    data: {
+      title: "this is the title of my event",
+      start: new Date(),
+      duration: 90
+    }
+  }));
   $(".calendarButton").attr("disabled", true);
 });
-  
 
 
+var popularity;
 
 //When popularity is clicked
 $(document).on('click', '.popular', function () {
-
+  var buttonPop = $(this)
   var eventId = $(this).attr("eventId")
   console.log(eventId)
-  var popularity;
-  database.ref('group/' + name + '/' + eventId + '/').set({
-    counter:0
-  })
-  // eventRef.on('value', function (snapshot) {
-  //   console.log(snapshot.val())
-  //   popularity++
-  // })
-  // eventRef.set({
-  //   counter: popularity
 
-  // })
+  database.ref('group/' + name + '/' + eventId + '/').once("value", function (snapshot) {
+
+    //Checks if button has ever been clicked
+    if (snapshot.child("counter").exists()) {
+      popularity = snapshot.val().counter;
+      console.log(popularity)
+      popularity++
+      database.ref('group/' + name + '/' + eventId + '/').set({
+        counter: popularity
+      });
+      buttonPop.text(popularity)
+    } else {
+      popularity = 1;
+      database.ref('group/' + name + '/' + eventId + '/').set({
+        counter: popularity
+      })
+      buttonPop.text(popularity)
+    }
+
+  });
+
 })
-
-
-
-// var eventIdUrl= 'https://www.eventbriteapi.com/v3/events/'+ eventId + '/'
-
-
-
-//When event's popularity is clicked- add eventID and increment
-//popularity in firebase
