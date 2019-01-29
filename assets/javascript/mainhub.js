@@ -96,7 +96,6 @@ function populateTable() {
       var Tab3 = $("<td>").text(response.events[i].start.local);
       var popular = $("<button class='popular' eventId=" + response.events[i].id + "'>").text("Interested?")
 
-
       var mapButton = $("<button class='mapButton' venue=" + response.events[i].venue_id + ">").text("Map");
 
 
@@ -104,15 +103,16 @@ function populateTable() {
       var calendarButton = $("<button class='calendarButton' eventId=" + response.events[i].id + "' >").text("Add to Calendar");
 
       // Append the newly created table data to the table row
-      tRow.append(Tab3, Tab1, popular);
+      tRow.append(mapButton,calendarButton,Tab3, Tab1, popular);
 
 
       // tRow.append(mapDiv);
       // Append the table row to the table body
       // initMap();
+      // $(tRow).append(mapButton);
+      // $(tRow).append(calendarButton);
       $("tbody").append(tRow);
-      $("tbody").append(mapButton);
-      $("tbody").append(calendarButton);
+
     }
 
   });
@@ -170,15 +170,53 @@ $(document).on('click', '.popular', function () {
       database.ref('group/' + name + '/' + eventId + '/').set({
         counter: popularity
       });
-      buttonPop.text(popularity)
+      var popNumber = $("<td>" + popularity + "</td>")
+      buttonPop.replaceWith(popNumber)
     } else {
       popularity = 1;
       database.ref('group/' + name + '/' + eventId + '/').set({
         counter: popularity
       })
-      buttonPop.text(popularity)
+      var popNumber = $("<td>" + popularity + "</td>")
+      buttonPop.replaceWith(popNumber)
     }
 
   });
 
 })
+//sorting by most popular items
+function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("myTable");
+  switching = true;
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    console.log(rows)
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[2];
+      y = rows[i + 1].getElementsByTagName("TD")[2];
+      //check if the two rows should switch place:
+      if (Number(x.innerHTML) < Number(y.innerHTML)) {
+        //if so, mark as a switch and break the loop:
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
