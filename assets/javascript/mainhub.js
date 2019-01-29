@@ -5,17 +5,8 @@
 
 var eLat
 var eLng
-// function initMap() {
-//   // The location of 
-//   var location = {lat: eLat, lng: eLng };
-//   // The map, centered
-//   var map = new google.maps.Map(
-//       document.getElementById('map'), {zoom: 12, center: location});
-//   // The marker, positioned at
-//   var marker = new google.maps.Marker({position: location, map: map});
-// };
 
-// var map;
+
 function initMap() {
   // Get all map canvas with ".maps" and store them to a variable.
   var maps = document.getElementsByClassName("maps");
@@ -84,7 +75,7 @@ groupRef.once("value", function (snapshot) {
 function populateTable() {
 
 
-  var QueryURL = 'https://www.eventbriteapi.com/v3/events/search/?q=coding&location.address=' + city + '&start_date.range_start=' + startDate + '&start_date.range_end=' + endDate + '&token=3RS5KP3QRP5LW3OTLAWF'
+  var QueryURL = 'https://www.eventbriteapi.com/v3/events/search/?q=&location.address=' + city + '&start_date.range_start=' + startDate + '&start_date.range_end=' + endDate + '&token=3RS5KP3QRP5LW3OTLAWF'
 
   console.log(QueryURL)
 
@@ -94,7 +85,7 @@ function populateTable() {
   }).then(function (response) {
     console.log(response)
     // Create a new table row element
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 10; i++) {
 
       var tRow = $("<tr Id= '" + response.events[i].id + "'>");
 
@@ -103,11 +94,15 @@ function populateTable() {
       var Tab1 = $("<td>").text(response.events[i].name.text);
       var Tab2 = $("<td>").text(response.events[i].description.text);
       var Tab3 = $("<td>").text(response.events[i].start.local);
-      var popular = $("<button class = pop eventId=" + response.events[i].id + "' >").text("Interested?")
+      var popular = $("<button class='popular' eventId=" + response.events[i].id + "'>").text("Interested?")
      
 
       var mapButton = $("<button class='mapButton' venue=" + response.events[i].venue_id + ">").text("Map");
-      var calendarButton = $("<button class = 'calendarButton'" + response.events[i].start + "' >").text("Add to Calendar");
+
+   
+
+      var calendarButton = $("<button class='calendarButton' eventId=" + response.events[i].id + "' >").text("Add to Calendar");
+
       // Append the newly created table data to the table row
       tRow.append(Tab3, Tab1, popular);
 
@@ -144,27 +139,32 @@ $(document).on('click', '.mapButton', function () {
 });
 
 //Adding the Calendar
+
 $(document).on("click", ".calendarButton", function() {
   document.getElementsByClassName('calendarButton')[0].appendChild(createCalendar({data:{title:"this is the title of my event", start: new Date(), duration: 90}}));
   $(".calendarButton").attr("disabled", true);
 });
   
 
-$(document).on("click", ".pop", function () {
+
+
+//When popularity is clicked
+$(document).on('click', '.popular', function () {
+
   var eventId = $(this).attr("eventId")
   console.log(eventId)
-  var popularity = 0
-
-  var eventRef = (database.ref('group/' + name + '/' + eventId + '/'));
-  eventRef.on('value', function (snapshot) {
-    console.log(snapshot.val())
-    popularity++
+  var popularity;
+  database.ref('group/' + name + '/' + eventId + '/').set({
+    counter:0
   })
-  eventRef.set({
-    counter: popularity
+  // eventRef.on('value', function (snapshot) {
+  //   console.log(snapshot.val())
+  //   popularity++
+  // })
+  // eventRef.set({
+  //   counter: popularity
 
-  })
-
+  // })
 })
 
 

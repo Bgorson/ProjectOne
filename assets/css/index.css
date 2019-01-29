@@ -9,7 +9,7 @@ body{
     color: white;
 }
 .navbar-dark {
-    background:#5bc0de;
+    background:#56b4d0;
 }
 
 .navbar-toggler-icon{
@@ -18,6 +18,8 @@ body{
 
 .navbar-nav {
     margin-left: auto;
+    font-weight: bold;
+    font-size: 1.1em;
 }
 
 .card {
@@ -28,4 +30,8 @@ body{
 }
 .secondary-title{
 font-style: italic;   
+}
+
+.nav-item {
+    padding-right: 1.5em;
 }

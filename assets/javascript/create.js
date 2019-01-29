@@ -26,22 +26,28 @@ function setGroupInfo(groupName, eventCity,eventState, startDate, endDate) {
 
 //Local Storage
 var eventInfo = [];
-$("#create").on("click", function () {
-//name field
-var name = document.getElementById("name").value;
-//sDate field
-var sDate = document.getElementById("start").value;
-//eDate field
-var eDate = document.getElementById("end").value;
-//location field
-var city = document.getElementById("city").value;
-var state = document.getElementById("state").value;
-//submit button
-
-
- setGroupInfo(name, city,state, sDate,eDate)
-  //putting group name in local storage
-  localStorage.setItem("groupName",name);
+$('#submit').on("click", function(){
+    event.preventDefault();
+    
+  var name = document.getElementById("name").value;
+  //sDate field
+  var sDate = document.getElementById("start").value;
+  //eDate field 
+  var eDate = document.getElementById("end").value;
+  //location field
+  var city = document.getElementById("city").value;
+  var state = document.getElementById("state").value;
+  if(name == ''||sDate== ''|| eDate==''|| city==''||state==''){
+      return false;
+  }
+  //submit button
+  window.location.href="./mainhub.html"
+   setGroupInfo(name, city,state, sDate,eDate)
+    //putting group name in local storage
+    localStorage.setItem("groupName",name);
+  
 })
+
+
 
 
