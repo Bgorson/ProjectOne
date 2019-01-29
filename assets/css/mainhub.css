@@ -6,3 +6,9 @@
     height: 200px;
     width:200px;
   }
+  .mapButton {
+    display:block
+  }
+  .calendarButton{
+    display:block
+  }

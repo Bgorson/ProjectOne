@@ -36,12 +36,14 @@
         </div>
       </nav>
     </div>
+    <p><button onclick="sortTable()">Sort</button></p>
     <div class="container">
             <!-- Content here -->
             <h1>Title</h1>
-    <table class="table">
+    <table class="table" id= "myTable">
         <thead class="thead-dark">
           <tr>
+            <th scope="col">Buttons</th>
             <th scope="col">Date</th>
             <th scope="col">Description</th>
             <th scope="col">Popularity</th>
@@ -49,7 +51,7 @@
               <tbody>
             
               </tbody>
-              
+      </table>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 
    
