@@ -98,7 +98,11 @@ function populateTable() {
      
 
       var mapButton = $("<button class='mapButton' venue=" + response.events[i].venue_id + ">").text("Map");
+
+   
+
       var calendarButton = $("<button class='calendarButton' eventId=" + response.events[i].id + "' >").text("Add to Calendar");
+
       // Append the newly created table data to the table row
       tRow.append(Tab3, Tab1, popular);
 
@@ -135,7 +139,12 @@ $(document).on('click', '.mapButton', function () {
 });
 
 //Adding the Calendar
-// document.getElementsByClassName('calendarButton')[0].appendChild(createCalendar({data:{title:"this is the title of my event", start: new Date(), duration: 90}}));
+
+$(document).on("click", ".calendarButton", function() {
+  document.getElementsByClassName('calendarButton')[0].appendChild(createCalendar({data:{title:"this is the title of my event", start: new Date(), duration: 90}}));
+  $(".calendarButton").attr("disabled", true);
+});
+  
 
 
 
@@ -157,6 +166,7 @@ $(document).on('click', '.popular', function () {
 
   // })
 })
+
 
 
 // var eventIdUrl= 'https://www.eventbriteapi.com/v3/events/'+ eventId + '/'
