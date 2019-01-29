@@ -5,17 +5,8 @@
 
 var eLat
 var eLng
-// function initMap() {
-//   // The location of 
-//   var location = {lat: eLat, lng: eLng };
-//   // The map, centered
-//   var map = new google.maps.Map(
-//       document.getElementById('map'), {zoom: 12, center: location});
-//   // The marker, positioned at
-//   var marker = new google.maps.Marker({position: location, map: map});
-// };
 
-// var map;
+
 function initMap() {
   // Get all map canvas with ".maps" and store them to a variable.
   var maps = document.getElementsByClassName("maps");
@@ -84,7 +75,7 @@ groupRef.once("value", function (snapshot) {
 function populateTable() {
 
 
-  var QueryURL = 'https://www.eventbriteapi.com/v3/events/search/?q=coding&location.address=' + city + '&start_date.range_start=' + startDate + '&start_date.range_end=' + endDate + '&token=3RS5KP3QRP5LW3OTLAWF'
+  var QueryURL = 'https://www.eventbriteapi.com/v3/events/search/?q=&location.address=' + city + '&start_date.range_start=' + startDate + '&start_date.range_end=' + endDate + '&token=3RS5KP3QRP5LW3OTLAWF'
 
   console.log(QueryURL)
 
@@ -94,7 +85,7 @@ function populateTable() {
   }).then(function (response) {
     console.log(response)
     // Create a new table row element
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < response.events.length; i++) {
 
       var tRow = $("<tr Id= '" + response.events[i].id + "'>");
 
