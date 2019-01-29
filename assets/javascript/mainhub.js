@@ -85,7 +85,7 @@ function populateTable() {
   }).then(function (response) {
     console.log(response)
     // Create a new table row element
-    for (i = 0; i < response.events.length; i++) {
+    for (i = 0; i < 10; i++) {
 
       var tRow = $("<tr Id= '" + response.events[i].id + "'>");
 
@@ -94,11 +94,11 @@ function populateTable() {
       var Tab1 = $("<td>").text(response.events[i].name.text);
       var Tab2 = $("<td>").text(response.events[i].description.text);
       var Tab3 = $("<td>").text(response.events[i].start.local);
-      var popular = $("<button class = pop eventId=" + response.events[i].id + "' >").text("Interested?")
+      var popular = $("<button class='popular' eventId=" + response.events[i].id + "'>").text("Interested?")
      
 
       var mapButton = $("<button class='mapButton' venue=" + response.events[i].venue_id + ">").text("Map");
-      var calendarButton = $("<button class = calendarButton " + response.events[i].id + "' >").text("Add to Calendar");
+      var calendarButton = $("<button class='calendarButton' eventId=" + response.events[i].id + "' >").text("Add to Calendar");
       // Append the newly created table data to the table row
       tRow.append(Tab3, Tab1, popular);
 
@@ -135,26 +135,27 @@ $(document).on('click', '.mapButton', function () {
 });
 
 //Adding the Calendar
-document.getElementsByClassName('calendarButton')[0].appendChild(createCalendar({data:{title:"this is the title of my event", start: new Date(), duration: 90}}));
+// document.getElementsByClassName('calendarButton')[0].appendChild(createCalendar({data:{title:"this is the title of my event", start: new Date(), duration: 90}}));
 
 
 
+//When popularity is clicked
+$(document).on('click', '.popular', function () {
 
-$(document).on("click", ".pop", function () {
   var eventId = $(this).attr("eventId")
   console.log(eventId)
-  var popularity = 0
-
-  var eventRef = (database.ref('group/' + name + '/' + eventId + '/'));
-  eventRef.on('value', function (snapshot) {
-    console.log(snapshot.val())
-    popularity++
+  var popularity;
+  database.ref('group/' + name + '/' + eventId + '/').set({
+    counter:0
   })
-  eventRef.set({
-    counter: popularity
+  // eventRef.on('value', function (snapshot) {
+  //   console.log(snapshot.val())
+  //   popularity++
+  // })
+  // eventRef.set({
+  //   counter: popularity
 
-  })
-
+  // })
 })
 
 
