@@ -27,7 +27,8 @@ function collectContact(groupName, yourName, yourEmail, yourNumber, yourComments
 //submit button
 $("#submit").on("click", function () {
 event.preventDefault();
-console.log("hi");
+
+
 
 var gName = document.getElementById("group-name").value;
 var yName = document.getElementById("your-name").value;
