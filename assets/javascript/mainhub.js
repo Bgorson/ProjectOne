@@ -94,34 +94,43 @@ function populateTable() {
       var Tab1 = $("<td>").text(response.events[i].name.text);
       var Tab2 = $("<td>").text(response.events[i].description.text);
       var Tab3 = $("<td>").text(response.events[i].start.local);
-      var popular = $("<button class='popular' eventId=" + response.events[i].id + "'>").text("Interested?")
+      var popular = $("<button class='popular' eventId='" + response.events[i].id + "'>").text("Interested?")
       var calendarButton = $("<button class='calendarButton' eventId='" + response.events[i].id + "'venue=" + response.events[i].venue_id + ">").text("Add to Calendar");
       var mapButton = $("<button class='mapButton' venue=" + response.events[i].venue_id + ">").text("Map");
-      
+      var popNumber=$("<td id='vote"+ response.events[i].id+ "'eventId='" + response.events[i].id + "'></td>")
       database.ref('group/' + name + '/' + response.events[i].id + '/').set({
         startDate: response.events[i].start.local,
         title: response.events[i].name.text,
         description: response.events[i].description.text,
         endDate: response.events[i].end.local
       });
-    
-      
+
+
 
       // Append the newly created table data to the table row
-      tRow.append(mapButton,calendarButton,Tab3, Tab1, popular);
+      tRow.append(mapButton, calendarButton, Tab3, Tab1, popular,popNumber);
 
-
-      // tRow.append(mapDiv);
-      // Append the table row to the table body
-      // initMap();
-      // $(tRow).append(mapButton);
-      // $(tRow).append(calendarButton);
       $("tbody").append(tRow);
 
+    
+      database.ref('group/' + name + '/voting/'+ response.events[i].id).on("value", function (snapshot) {
+        console.log("Key"+ snapshot.key)
+        console.log("count"+snapshot.val().counter)
+      
+        var vote = document.getElementById("vote"+snapshot.key)
+        $(vote).text(snapshot.val().counter)
+      
+      })
     }
 
   });
 };
+
+
+
+
+
+
 //Displaying the map
 //NEED TO ONLY APPEND MAP TO CORRECT BUTTONS
 $(document).on('click', '.mapButton', function () {
@@ -143,7 +152,7 @@ $(document).on('click', '.mapButton', function () {
 
 });
 
-  
+
 
 $(document).on('click', '.calendarButton', function () {
   var calendarButtonDiv = this;
@@ -151,13 +160,8 @@ $(document).on('click', '.calendarButton', function () {
   var eventId = $(this).attr("eventid");
   var QueryURL = 'https://www.eventbriteapi.com/v3/venues/' + venueid + '/?token=TPQYCAU53IO2TT2FQOOY';
   var calendarDiv = $("<div id='calendar" + venueid + "'class='calendar'>")
-  
-  var eventTitle
-  var eventDescription
-  var eventDate
-  var eventTime 
 
-  database.ref('group/' + name + '/' + eventId + '/').once("value", function (snapshot) { 
+  database.ref('group/' + name + '/' + eventId + '/').once("value", function (snapshot) {
     console.log(snapshot.val());
     eventTitle = snapshot.val().title;
     eventDescription = snapshot.val().description;
@@ -173,11 +177,11 @@ $(document).on('click', '.calendarButton', function () {
     var eventTitle
     var eventDescription
     var eventDate
-    var eventTime 
+    var eventTime
     var eventLocation
     var eventEnd
 
-    database.ref('group/' + name + '/' + eventId + '/').once("value", function (snapshot) { 
+    database.ref('group/' + name + '/' + eventId + '/').once("value", function (snapshot) {
       console.log(snapshot.val());
       eventTitle = snapshot.val().title;
       eventDescription = snapshot.val().description;
@@ -185,29 +189,29 @@ $(document).on('click', '.calendarButton', function () {
       eventLocation = response.address.localized_address_display
       eventEnd = snapshot.val().endDate;
       console.log(eventTitle);
-      console.log(response); 
-      console.log(eventLocation); 
+      console.log(response);
+      console.log(eventLocation);
       var myCalendar = createCalendar({
         options: {
           class: 'my-class',
-          
+
           // You can pass an ID. If you don't, one will be generated for you
           id: 'calendar' + venueid
         },
         data: {
           // Event title
           title: eventTitle,
-      
+
           // Event start date
           start: new Date(eventDate),
-      
+
           // You can also choose to set an end time
           // If an end time is set, this will take precedence over duration
-          end: new Date(eventEnd),     
-      
+          end: new Date(eventEnd),
+
           // Event Address
           address: eventLocation,
-      
+
           // Event Description
           description: eventDescription
         }
@@ -215,9 +219,9 @@ $(document).on('click', '.calendarButton', function () {
       $(calendarButtonDiv).replaceWith(calendarDiv);
       document.querySelector('#calendar' + venueid).appendChild(myCalendar);
     });
-   
 
-    
+
+
   });
 
 });
@@ -227,29 +231,31 @@ var popularity;
 
 //When popularity is clicked
 $(document).on('click', '.popular', function () {
-  var buttonPop = $(this)
+  var button=$(this)
   var eventId = $(this).attr("eventId")
   console.log(eventId)
 
-  database.ref('group/' + name + '/' + eventId + '/').once("value", function (snapshot) {
+  database.ref('group/' + name + '/voting/' + eventId + '/').once("value", function (snapshot) {
 
     //Checks if button has ever been clicked
     if (snapshot.child("counter").exists()) {
+      button.html("")
       popularity = snapshot.val().counter;
       console.log(popularity)
       popularity++
-      database.ref('group/' + name + '/' + eventId + '/').set({
+      database.ref('group/' + name + '/voting/' + eventId + '/').set({
         counter: popularity
       });
-      var popNumber = $("<td>" + popularity + "</td>")
-      buttonPop.replaceWith(popNumber)
+      
+  
     } else {
+      button.html("")
       popularity = 1;
-      database.ref('group/' + name + '/' + eventId + '/').set({
+      database.ref('group/' + name + '/voting/' + eventId + '/').set({
         counter: popularity
       })
-      var popNumber = $("<td>" + popularity + "</td>")
-      buttonPop.replaceWith(popNumber)
+      
+   
     }
 
   });
@@ -257,6 +263,7 @@ $(document).on('click', '.popular', function () {
 })
 //sorting by most popular items
 function sortTable() {
+ 
   var table, rows, switching, i, x, y, shouldSwitch;
   table = document.getElementById("myTable");
   switching = true;
@@ -267,9 +274,11 @@ function sortTable() {
     switching = false;
     rows = table.rows;
     console.log(rows)
+    
     /*Loop through all table rows (except the
     first, which contains table headers):*/
     for (i = 1; i < (rows.length - 1); i++) {
+      
       //start by saying there should be no switching:
       shouldSwitch = false;
       /*Get the two elements you want to compare,
@@ -282,6 +291,7 @@ function sortTable() {
         shouldSwitch = true;
         break;
       }
+      
     }
     if (shouldSwitch) {
       /*If a switch has been marked, make the switch
