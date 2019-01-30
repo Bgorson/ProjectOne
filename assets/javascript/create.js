@@ -26,7 +26,7 @@ function setGroupInfo(groupName, eventCity,eventState, startDate, endDate) {
 
 //Local Storage
 var eventInfo = [];
-$('#submit').on("click", function(){
+$('#submit').on("click", function(event){
     event.preventDefault();
     
   var name = document.getElementById("name").value;
