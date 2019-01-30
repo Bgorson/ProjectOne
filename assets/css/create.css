@@ -42,3 +42,7 @@ body, .card, #submit{
 .card {
     margin-bottom: 1em;
 }
+#error{
+    color:red;
+    text-align: center;
+}

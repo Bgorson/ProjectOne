@@ -22,3 +22,6 @@ body, .card, .nav{
 .card {
     margin-top: 1em;
 }
+#groupDisplay{
+     text-align: center;
+}

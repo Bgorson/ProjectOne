@@ -38,6 +38,7 @@ $('#submit').on("click", function(){
   var city = document.getElementById("city").value;
   var state = document.getElementById("state").value;
   if(name == ''||sDate== ''|| eDate==''|| city==''||state==''){
+    $("#error").text("Please complete out all fields")
       return false;
   }
   //submit button
