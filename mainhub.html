@@ -36,10 +36,13 @@
         </div>
       </nav>
     </div>
-    <p><button onclick="sortTable()">Sort</button></p>
     <div class="container">
             <!-- Content here -->
             <h1>Title</h1>
+            <div class="form-group">
+              <label for="filter">What are you interested in?</label>
+              <input type="text" class="form-control" id="filter" required>
+              <a class="btn btn-info btn-lg" id="submit" role="button">Submit</a>
     <table class="table" id= "myTable">
         <thead class="thead-dark">
           <tr>
@@ -47,7 +50,7 @@
             <th scope="col">Date</th>
             <th scope="col">Description</th>
             <th scope="col">Popularity</th>
-            <th scope="col">Votes</th>
+            <th scope="col" type="button" onclick="sortTable()"">Votes</th>
               <tbody>
             
               </tbody>

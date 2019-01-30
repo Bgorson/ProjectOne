@@ -5,7 +5,7 @@
 
 var eLat
 var eLng
-
+var filter='';
 
 function initMap() {
   // Get all map canvas with ".maps" and store them to a variable.
@@ -67,15 +67,15 @@ groupRef.once("value", function (snapshot) {
   console.log(city);
   console.log(startDate);
   console.log(endDate);
-  populateTable();
+  populateTable('');
 });
 
 
 //Put in response.Lat.long variable and line them uo  
-function populateTable() {
+function populateTable(queryFilter) {
 
 
-  var QueryURL = 'https://www.eventbriteapi.com/v3/events/search/?q=&location.address=' + city + '&start_date.range_start=' + startDate + '&start_date.range_end=' + endDate + '&token=3RS5KP3QRP5LW3OTLAWF'
+  var QueryURL = 'https://www.eventbriteapi.com/v3/events/search/?q='+queryFilter+'&location.address=' + city + '&start_date.range_start=' + startDate + '&start_date.range_end=' + endDate + '&token=3RS5KP3QRP5LW3OTLAWF'
 
   console.log(QueryURL)
 
@@ -85,7 +85,7 @@ function populateTable() {
   }).then(function (response) {
     console.log(response)
     // Create a new table row element
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < response.events.length; i++) {
 
       var tRow = $("<tr Id= '" + response.events[i].id + "'>");
 
@@ -301,3 +301,11 @@ function sortTable() {
     }
   }
 }
+//Filter Button
+$('#submit').on("click", function(event){
+  $("tbody").empty()
+  event.preventDefault();
+  filter= document.getElementById("filter").value;
+  console.log(filter)
+  populateTable(filter)
+})
