@@ -46,8 +46,9 @@ $("#join").on("click", function () { // pulls from group object from firebase
     //console.log(snapshot.val());
     var databaseGroup = snapshot.val();
     if (databaseGroup[formInput]) { // checks if input is in firebase
+      $("#groupDisplay").css("color","black")
       var groupSelected = databaseGroup[formInput] // <-- This contains all object information about Group. Can pass to mainhub
-      $(".display-groups").text(groupSelected.name)
+      $(".display-groups").text("Click here to access the "+ groupSelected.name + " Group")
 
       console.log(groupSelected.name);
       var groupName = groupSelected.name
@@ -59,7 +60,8 @@ $("#join").on("click", function () { // pulls from group object from firebase
       //console.log("here")
 
     } else {
-      console.log("not here")
+      $("#groupDisplay").css("color","red")
+      $("#groupDisplay").text("We can't find your group")
     }
   })
 
