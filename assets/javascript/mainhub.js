@@ -95,12 +95,17 @@ function populateTable() {
       var Tab2 = $("<td>").text(response.events[i].description.text);
       var Tab3 = $("<td>").text(response.events[i].start.local);
       var popular = $("<button class='popular' eventId=" + response.events[i].id + "'>").text("Interested?")
-
+      var calendarButton = $("<button class='calendarButton' eventId='" + response.events[i].id + "'venue=" + response.events[i].venue_id + ">").text("Add to Calendar");
       var mapButton = $("<button class='mapButton' venue=" + response.events[i].venue_id + ">").text("Map");
-
-
-
-      var calendarButton = $("<button class='calendarButton' eventId=" + response.events[i].id + "' >").text("Add to Calendar");
+      
+      database.ref('group/' + name + '/' + response.events[i].id + '/').set({
+        startDate: response.events[i].start.local,
+        title: response.events[i].name.text,
+        description: response.events[i].description.text,
+        endDate: response.events[i].end.local
+      });
+    
+      
 
       // Append the newly created table data to the table row
       tRow.append(mapButton,calendarButton,Tab3, Tab1, popular);
@@ -138,17 +143,83 @@ $(document).on('click', '.mapButton', function () {
 
 });
 
-//Adding the Calendar
+  
 
-$(document).on("click", ".calendarButton", function () {
-  document.getElementsByClassName('calendarButton')[0].appendChild(createCalendar({
-    data: {
-      title: "this is the title of my event",
-      start: new Date(),
-      duration: 90
-    }
-  }));
-  $(".calendarButton").attr("disabled", true);
+$(document).on('click', '.calendarButton', function () {
+  var calendarButtonDiv = this;
+  var venueid = $(this).attr("venue");
+  var eventId = $(this).attr("eventid");
+  var QueryURL = 'https://www.eventbriteapi.com/v3/venues/' + venueid + '/?token=TPQYCAU53IO2TT2FQOOY';
+  var calendarDiv = $("<div id='calendar" + venueid + "'class='calendar'>")
+  
+  var eventTitle
+  var eventDescription
+  var eventDate
+  var eventTime 
+
+  database.ref('group/' + name + '/' + eventId + '/').once("value", function (snapshot) { 
+    console.log(snapshot.val());
+    eventTitle = snapshot.val().title;
+    eventDescription = snapshot.val().description;
+  });
+
+
+  $.ajax({
+    url: QueryURL,
+    method: "GET"
+  }).then(function (response) {
+    console.log(response);
+
+    var eventTitle
+    var eventDescription
+    var eventDate
+    var eventTime 
+    var eventLocation
+    var eventEnd
+
+    database.ref('group/' + name + '/' + eventId + '/').once("value", function (snapshot) { 
+      console.log(snapshot.val());
+      eventTitle = snapshot.val().title;
+      eventDescription = snapshot.val().description;
+      eventDate = snapshot.val().startDate;
+      eventLocation = response.address.localized_address_display
+      eventEnd = snapshot.val().endDate;
+      console.log(eventTitle);
+      console.log(response); 
+      console.log(eventLocation); 
+      var myCalendar = createCalendar({
+        options: {
+          class: 'my-class',
+          
+          // You can pass an ID. If you don't, one will be generated for you
+          id: 'calendar' + venueid
+        },
+        data: {
+          // Event title
+          title: eventTitle,
+      
+          // Event start date
+          start: new Date(eventDate),
+      
+          // You can also choose to set an end time
+          // If an end time is set, this will take precedence over duration
+          end: new Date(eventEnd),     
+      
+          // Event Address
+          address: eventLocation,
+      
+          // Event Description
+          description: eventDescription
+        }
+      });
+      $(calendarButtonDiv).replaceWith(calendarDiv);
+      document.querySelector('#calendar' + venueid).appendChild(myCalendar);
+    });
+   
+
+    
+  });
+
 });
 
 
