@@ -1,12 +1,29 @@
-//NEED DATA TO BE DISPLAYED BETTER
-
-//create Map with location
-
-
+//declaring globale variables
+var popularity;
+//map variables
 var eLat
 var eLng
-var filter='';
+//filter variable
+var filter = '';
+// firebase group Info
+var city
+var startDate
+var endDate
+var database = firebase.database();
+//retrieve the group name from local storage so we can find in firebase calls
+var name = (localStorage.getItem("groupName"));
+var groupRef = (database.ref('group/' + name));
+//Assigns variables from firebase to be called to and kept for AJAX call
+//also runs initial function to show nonfiltered results
+groupRef.once("value", function (snapshot) {
+  city = (snapshot.val().city);
+  startDate = (snapshot.val().sDate) + "T00%3A00%3A00Z";
+  endDate = (snapshot.val().eDate) + "T00%3A00%3A00Z";
+  populateTable('');
+});
 
+
+//function to create Map with location marker
 function initMap() {
   // Get all map canvas with ".maps" and store them to a variable.
   var maps = document.getElementsByClassName("maps");
@@ -51,53 +68,29 @@ function initMap() {
 }
 
 
-// firebase Info
-var city
-var startDate
-var endDate
-var database = firebase.database();
-var name = (localStorage.getItem("groupName"));
-console.log(name)
-var groupRef = (database.ref('group/' + name));
-//NEED TO CHANGE WHEN POPULATE TABLE IS CALLED
-groupRef.once("value", function (snapshot) {
-  city = (snapshot.val().city);
-  startDate = (snapshot.val().sDate) + "T00%3A00%3A00Z";
-  endDate = (snapshot.val().eDate) + "T00%3A00%3A00Z";
-  console.log(city);
-  console.log(startDate);
-  console.log(endDate);
-  populateTable('');
-});
 
 
-//Put in response.Lat.long variable and line them uo  
+
+//function to populate the page with rows of data
 function populateTable(queryFilter) {
-
-
-  var QueryURL = 'https://www.eventbriteapi.com/v3/events/search/?q='+queryFilter+'&location.address=' + city + '&start_date.range_start=' + startDate + '&start_date.range_end=' + endDate + '&token=3RS5KP3QRP5LW3OTLAWF'
-
-  console.log(QueryURL)
-
+  //URL used to search for events matching group parameters
+  var QueryURL = 'https://www.eventbriteapi.com/v3/events/search/?q=' + queryFilter + '&location.address=' + city + '&start_date.range_start=' + startDate + '&start_date.range_end=' + endDate + '&token=3RS5KP3QRP5LW3OTLAWF'
   $.ajax({
     url: QueryURL,
     method: "GET"
   }).then(function (response) {
     console.log(response)
-    // Create a new table row element
     for (i = 0; i < response.events.length; i++) {
-
+      // Create a new table row element
       var tRow = $("<tr Id= '" + response.events[i].id + "'>");
-
-      // Methods run on jQuery selectors return the selector they we run on
-      // This is why we can create and save a reference to a td in the same statement we update its text
       var Tab1 = $("<td>").text(response.events[i].name.text);
       var Tab2 = $("<td>").text(response.events[i].description.text);
       var Tab3 = $("<td>").text(response.events[i].start.local);
       var popular = $("<button class='popular' eventId='" + response.events[i].id + "'>").text("Interested?")
       var calendarButton = $("<button class='calendarButton' eventId='" + response.events[i].id + "'venue=" + response.events[i].venue_id + ">").text("Add to Calendar");
       var mapButton = $("<button class='mapButton' venue=" + response.events[i].venue_id + ">").text("Map");
-      var popNumber=$("<td id='vote"+ response.events[i].id+ "'eventId='" + response.events[i].id + "'></td>")
+      var popNumber = $("<td id='vote" + response.events[i].id + "'eventId='" + response.events[i].id + "'></td>")
+      //set firebase data with relevant information for cal invites
       database.ref('group/' + name + '/' + response.events[i].id + '/').set({
         startDate: response.events[i].start.local,
         title: response.events[i].name.text,
@@ -105,34 +98,25 @@ function populateTable(queryFilter) {
         endDate: response.events[i].end.local
       });
 
-
-
       // Append the newly created table data to the table row
-      tRow.append(mapButton, calendarButton, Tab3, Tab1, popular,popNumber);
-
+      tRow.append(mapButton, calendarButton, Tab3, Tab1, popular, popNumber);
+      //Append the row to the page
       $("tbody").append(tRow);
 
-    
-      database.ref('group/' + name + '/voting/'+ response.events[i].id).on("value", function (snapshot) {
-        console.log("Key"+ snapshot.key)
-        console.log("count"+snapshot.val().counter)
-      
-        var vote = document.getElementById("vote"+snapshot.key)
+      //determine how many votes an event has had and display it in vote tab
+      database.ref('group/' + name + '/voting/' + response.events[i].id).on("value", function (snapshot) {
+        var vote = document.getElementById("vote" + snapshot.key)
         $(vote).text(snapshot.val().counter)
-      
+
       })
     }
 
   });
 };
 
-
-
-
-
-
 //Displaying the map
-//NEED TO ONLY APPEND MAP TO CORRECT BUTTONS
+//runs another AJAX call on the specific venue selected
+//stores lat and lng and passes it into google maps function
 $(document).on('click', '.mapButton', function () {
   var mapButtonDiv = this;
   var venueid = $(this).attr("venue");
@@ -152,22 +136,20 @@ $(document).on('click', '.mapButton', function () {
 
 });
 
-
-
+//Uses OuiCal to creates calendar invite
 $(document).on('click', '.calendarButton', function () {
   var calendarButtonDiv = this;
   var venueid = $(this).attr("venue");
   var eventId = $(this).attr("eventid");
   var QueryURL = 'https://www.eventbriteapi.com/v3/venues/' + venueid + '/?token=TPQYCAU53IO2TT2FQOOY';
   var calendarDiv = $("<div id='calendar" + venueid + "'class='calendar'>")
-
   database.ref('group/' + name + '/' + eventId + '/').once("value", function (snapshot) {
     console.log(snapshot.val());
     eventTitle = snapshot.val().title;
     eventDescription = snapshot.val().description;
   });
 
-
+//completes AJAX call on venue title to find location address
   $.ajax({
     url: QueryURL,
     method: "GET"
@@ -227,17 +209,14 @@ $(document).on('click', '.calendarButton', function () {
 });
 
 
-var popularity;
+
 
 //When popularity is clicked
 $(document).on('click', '.popular', function () {
-  var button=$(this)
+  var button = $(this)
   var eventId = $(this).attr("eventId")
-  console.log(eventId)
-
-  database.ref('group/' + name + '/voting/' + eventId + '/').once("value", function (snapshot) {
-
-    //Checks if button has ever been clicked
+ //Checks if button has ever been clicked
+  database.ref('group/' + name + '/voting/' + eventId + '/').once("value", function (snapshot) {  
     if (snapshot.child("counter").exists()) {
       button.html("")
       popularity = snapshot.val().counter;
@@ -246,24 +225,19 @@ $(document).on('click', '.popular', function () {
       database.ref('group/' + name + '/voting/' + eventId + '/').set({
         counter: popularity
       });
-      
-  
+      //if it hasn't been clicked, it sets it to 1 and creates it
     } else {
       button.html("")
       popularity = 1;
       database.ref('group/' + name + '/voting/' + eventId + '/').set({
         counter: popularity
       })
-      
-   
     }
-
   });
-
 })
 //sorting by most popular items
 function sortTable() {
- 
+
   var table, rows, switching, i, x, y, shouldSwitch;
   table = document.getElementById("myTable");
   switching = true;
@@ -274,11 +248,11 @@ function sortTable() {
     switching = false;
     rows = table.rows;
     console.log(rows)
-    
+
     /*Loop through all table rows (except the
     first, which contains table headers):*/
     for (i = 1; i < (rows.length - 1); i++) {
-      
+
       //start by saying there should be no switching:
       shouldSwitch = false;
       /*Get the two elements you want to compare,
@@ -291,7 +265,7 @@ function sortTable() {
         shouldSwitch = true;
         break;
       }
-      
+
     }
     if (shouldSwitch) {
       /*If a switch has been marked, make the switch
@@ -302,10 +276,11 @@ function sortTable() {
   }
 }
 //Filter Button
-$('#submit').on("click", function(event){
+//empties the current page and re-populates table with an added Q value
+$('#submit').on("click", function (event) {
   $("tbody").empty()
   event.preventDefault();
-  filter= document.getElementById("filter").value;
+  filter = document.getElementById("filter").value;
   console.log(filter)
   populateTable(filter)
 })
