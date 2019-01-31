@@ -32,13 +32,21 @@ $('#submit').on("click", function(event){
   var name = document.getElementById("name").value;
   //sDate field
   var sDate = document.getElementById("start").value;
+  var sMonth= sDate.slice(0,2)
+  var sDay=sDate.slice(3,5)
+  var sYear=sDate.slice(6,10)
+  sDate= sYear+"-"+sMonth+"-"+sDay
   //eDate field 
   var eDate = document.getElementById("end").value;
+  eMonth= eDate.slice(0,2)
+  eDay=eDate.slice(3,5)
+  eYear=eDate.slice(6,10)
+  eDate= eYear+"-"+eMonth+"-"+eDay
   //location field
   var city = document.getElementById("city").value;
   var state = document.getElementById("state").value;
   if(name == ''||sDate== ''|| eDate==''|| city==''||state==''){
-    $("#error").text("Please complete out all fields")
+    $("#error").text("Please complete all fields")
       return false;
   }
   //submit button
