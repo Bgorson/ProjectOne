@@ -14,6 +14,7 @@ var database = firebase.database();
 var groupRef = database.ref("group/")
 
 function setGroupInfo(groupName, eventCity,eventState, startDate, endDate) {
+
   database.ref('group/' + groupName).set({
     name: groupName,
     city: eventCity,
@@ -45,10 +46,23 @@ $('#submit').on("click", function(event){
   //location field
   var city = document.getElementById("city").value;
   var state = document.getElementById("state").value;
+  
+  database.ref('group/'+name).once("value",function(snapshot){
+    if (snapshot.exists()){
+      console.log("original!")
+      alert("STOP")
+    }
+    else {
+      console.log("unique")
+      alert("Good")
+    }
+    })
+    
   if(name == ''||sDate== ''|| eDate==''|| city==''||state==''){
     $("#error").text("Please complete all fields")
       return false;
   }
+ 
   //submit button
   window.location.href="./mainhub.html"
    setGroupInfo(name, city,state, sDate,eDate)
