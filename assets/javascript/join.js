@@ -48,7 +48,7 @@ $("#join").on("click", function () { // pulls from group object from firebase
     if (databaseGroup[formInput]) { // checks if input is in firebase
       $("#groupDisplay").css("color","black")
       var groupSelected = databaseGroup[formInput] // <-- This contains all object information about Group. Can pass to mainhub
-      $(".display-groups").text("Click here to access the "+ groupSelected.name + " Group")
+      $(".display-groups").html("<button class ='btn btn-info btn-lg'>Click here to access the "+ groupSelected.name + " Group</button>");
 
       console.log(groupSelected.name);
       var groupName = groupSelected.name
