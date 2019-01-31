@@ -41,3 +41,8 @@ body, .card, #submit{
 .card {
     margin-bottom: 1em;
 }
+
+#success {
+    background: #39ff14;
+    text-align: center;
+}

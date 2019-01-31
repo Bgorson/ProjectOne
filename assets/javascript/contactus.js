@@ -28,7 +28,7 @@ function collectContact(groupName, yourName, yourEmail, yourNumber, yourComments
 $("#submit").on("click", function () {
 event.preventDefault();
 
-
+$("#success").text("Thanks! We've received your note and will be in touch shortly!");
 
 var gName = document.getElementById("group-name").value;
 var yName = document.getElementById("your-name").value;
@@ -43,6 +43,10 @@ collectContact(gName, yName, yEmail, yNumber, yComments)
  $("#your-email").val("");
  $("#your-number").val("");
  $("#comments").val("");
+
+ 
+
+
 }) 
 
 
