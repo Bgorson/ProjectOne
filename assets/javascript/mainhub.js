@@ -68,7 +68,10 @@ function initMap() {
 }
 
 
-
+//CREATING CLICKED EVENTS AT THE TOP
+//https://www.eventbriteapi.com/v3/events/49674676294/?token=TPQYCAU53IO2TT2FQOOY
+//create new function that populates a table on top of the other one made up of all the objects in firebase ID
+//make sure it is compatible with map, cal and ongoing popularity clicks
 
 
 //function to populate the page with rows of data
@@ -282,3 +285,7 @@ $('#submit').on("click", function (event) {
   console.log(filter)
   populateTable(filter)
 })
+
+//ADD MORE BUTTON TO DISPLAY MORE EVENTS
+//just add page=2 to the end of the AJAX call
+//iterate with each more click, change function arguments
