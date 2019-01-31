@@ -23,6 +23,11 @@ function setGroupInfo(groupName, eventCity,eventState, startDate, endDate) {
     events: {}
   });
 }
+// groupRef.once("value",function(snapshot){
+//   console.log(snapshot.val())
+//  })
+
+
 
 //Local Storage
 var eventInfo = [];
@@ -45,16 +50,29 @@ $('#submit').on("click", function(event){
   //location field
   var city = document.getElementById("city").value;
   var state = document.getElementById("state").value;
+
+  database.ref('group/' + name).on("value",function(snapshot){
   if(name == ''||sDate== ''|| eDate==''|| city==''||state==''){
     $("#error").text("Please complete all fields")
       return false;
   }
+  
+    if (snapshot.exists()){
+      // console.log("repeat!")
+      // console.log(snapshot.val());
+      $("#error").text("Duplicate Name!")
+      alert("Duplicate!");
+      return false;
+     
+    }
+   
+   });
   //submit button
   window.location.href="./mainhub.html"
    setGroupInfo(name, city,state, sDate,eDate)
     //putting group name in local storage
     localStorage.setItem("groupName",name);
-  
+console.log(window.location.href);
 })
 
 

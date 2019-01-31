@@ -90,6 +90,7 @@ function populateTable(queryFilter) {
       var calendarButton = $("<button class='calendarButton' eventId='" + response.events[i].id + "'venue=" + response.events[i].venue_id + ">").text("Add to Calendar");
       var mapButton = $("<button class='mapButton' venue=" + response.events[i].venue_id + ">").text("Map");
       var popNumber = $("<td id='vote" + response.events[i].id + "'eventId='" + response.events[i].id + "'></td>")
+      
       //set firebase data with relevant information for cal invites
       database.ref('group/' + name + '/' + response.events[i].id + '/').set({
         startDate: response.events[i].start.local,
@@ -176,8 +177,6 @@ $(document).on('click', '.calendarButton', function () {
       var myCalendar = createCalendar({
         options: {
           class: 'my-class',
-
-          // You can pass an ID. If you don't, one will be generated for you
           id: 'calendar' + venueid
         },
         data: {
@@ -187,8 +186,7 @@ $(document).on('click', '.calendarButton', function () {
           // Event start date
           start: new Date(eventDate),
 
-          // You can also choose to set an end time
-          // If an end time is set, this will take precedence over duration
+          // Event end date
           end: new Date(eventEnd),
 
           // Event Address
