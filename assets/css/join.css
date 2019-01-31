@@ -1,27 +1,44 @@
-body, .card, .nav{
+body, .button, .card, #submit{
     font-family: "Font Awesome 5 Free";
-    font-size: 1.1em;
 }
 
 .container-fullwidth {
     padding-top: 1em; 
 }
 
-.navbar-dark {
+.navbar {
     background:#56b4d0;
-}
-
-.navbar-toggler-icon{
-    color: white;
 }
 
 .navbar-nav {
     margin-left: auto;
+    font-weight: bold;
+    font-size: 1.1em;
 }
 
-.card {
+.nav-item {
+    padding-right: 1.5em;
+}
+
+.card-header {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.card-body {
+    font-size: 1.1em;
+}
+
+.top-card {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
     margin-top: 1em;
 }
-#groupDisplay{
-     text-align: center;
+.card {
+    margin-bottom: 1em;
+}
+
+.button {
+    background:#56b4d0;   
+    text-align: center;
 }

@@ -15,45 +15,49 @@
 
 <body>
   <!--Navbar and Hamburger Menu Added-->
-  <div class="container-fullwidth">
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="index.html"><i class="fas fa-home fa-lg"> Ven-You</i></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-        aria-controls="navbarNavDropdown" aria-expanded="true" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  div class="container-fullwidth">
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="index.html"><i class="fas fa-home fa-lg"> Ven-You</i></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+      aria-expanded="true" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <!--Hamburger Menu Dropdown created-->
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Ven-You Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="create.html">Create Group</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contactus.html">Contact Us</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="aboutus.html">About Us</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <!--Hamburger Menu Dropdown created-->
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Ven-You Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="create.html">Create Group</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contactus.html">Contact Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="aboutus.html">About Us</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
   </div>
 
+  <br>
   <!-- Search form -->
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <div class="join" style="border:#5bc0de">
-          <input class="form-control" type="text" placeholder="Search" aria-label="Search" style="border:#5bc0de">
-          <small class="form-text" style="color: white">Case Sensitive!</small>
+        <div class="join">
+          <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+          <small class="form-text">Case Sensitive!</small>
+
           <br>
 
           <!-- Create functional submit button-->
-          <button type="submit" class="btn btn-info" id="join">Find my Friend Group</button>
+          <div class="button">
+            <button type="submit" class="btn btn-info btn-lg" id="join" role="button">Find my Friend Group</button>
+          </div>
         </div>
       </div>
     </div>
@@ -65,27 +69,31 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <div class="card">
-          <div class="card-header">Friend Groups</div>
+        <div class="top-card">
+          <div class="card card-default">
+            <div class="card-header">Your Friend Group</div>
+          </div>
+        </div>
+        <div class="card card-default">
           <div class="card-body">
-            <div id = "groupDisplay" class="display-groups" style="cursor: pointer"></div>
+            <div id="groupDisplay" class="display-groups">Your friend group search results will appear here. Select
+              your friend group to chose and vote on events with your friends!</div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  </div>
+  </div>
 
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <div>
-          <br>
-          <div class="buttons" style="text-align:center" style="color:white">
-
-          </div>
+        <div class="buttons">
         </div>
       </div>
     </div>
+  </div>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
