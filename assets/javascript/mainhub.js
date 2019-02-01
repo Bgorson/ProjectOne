@@ -84,12 +84,12 @@ function populateTable(queryFilter,page) {
     console.log(response)
     for (i = 0; i < response.events.length; i++) {
       // Create a new table row element
-      var collapseBtn= $("<button type='button' data-toggle= 'collapse' data-target='#collapseId" + response.events[i].id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.events[i].id + "'>Click for more details</button>")
+      var collapseBtn= $("<button type='button' data-toggle= 'collapse' data-target='#collapseId'" + response.events[i].id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.events[i].id + "'>Click for more details</button>")
       var tRow = $("<tr id= '" + response.events[i].id + "'>");
       var Tab1 = $("<td>").text(response.events[i].name.text);
       var Tab2 = $("<td>").text(response.events[i].description.text);
       var Tab3 = $("<td>").text(response.events[i].start.local);
-      var collapseDiv= $("<div class='collapse' id='collapseId" + response.events[i].id + "'>"+response.events[i].description.text+"</div>")
+      var collapseDiv= $("<div class='collapse' id='collapseId'" + response.events[i].id + "'>"+response.events[i].description.text+"</div>")
       
       var popular = $("<button class='popular' eventId='" + response.events[i].id + "'>").text("Interested?")
       var calendarButton = $("<button class='calendarButton' eventId='" + response.events[i].id + "'venue=" + response.events[i].venue_id + ">").text("Add to Calendar");
