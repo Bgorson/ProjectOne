@@ -44,13 +44,22 @@ $('#submit').on("click", function(event){
   }
 
   database.ref('group/' + name).once('value', function(snapshot) {
-    if (snapshot.exists()) {
+    // if (snapshot.exists()) {
       // users.child(name).set({ name: name });
-      window.location.href="./mainhub.html"
-  }
-  else {
-      alert("That user already exists");
-  }
+      // window.location.href="./mainhub.html"
+  // }
+//   else {
+//       alert("That user already exists");
+//   }
+// });
+
+if (!snapshot.hasChild(name)) {
+  // groupRef.child(name).set({ name: name });
+  window.location.href="./mainhub.html"
+}
+else {
+  alert("That user already exists");
+}
 });
   
 
@@ -61,9 +70,6 @@ $('#submit').on("click", function(event){
   
        
         
-  
-
-
   // database.ref('group').on("value",function(snapshot){
   //   if (snapshot.exists()){
   //     console.log("repeat!")
