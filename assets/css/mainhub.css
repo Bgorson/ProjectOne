@@ -2,6 +2,10 @@ body, .card, #submit{
   font-family: "Font Awesome 5 Free";
 }
 
+.row {
+  color:gainsboro;
+}
+
 .container-fullwidth {
   padding-top: 1em; 
 }
@@ -23,6 +27,7 @@ body, .card, #submit{
 .card-header {
   font-size: 1.2em;
   font-weight: bold;
+  color: #495057;
 }
 .card-body {
   font-size: 1.1em;
