@@ -12,8 +12,6 @@ The Application is built with:
 - Javascript 
 - HTML
 - CSS
-- jQuery
-- Bootstrap
 - Firebase
 
 The Application Programming Interfaces used are:
@@ -24,7 +22,9 @@ The Application Programming Interfaces used are:
 The Libraries used are:
 ---------------------------------------------------
 - OuiCal 
-- FontAwesome.
+- FontAwesome
+- jQuery
+- Bootstrap
 
 **How it works:**
 ---------------------------------------------------
