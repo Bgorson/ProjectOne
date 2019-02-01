@@ -5,6 +5,7 @@ var eLat
 var eLng
 //filter variable
 var filter = '';
+var more= 1;
 // firebase group Info
 var city
 var startDate
@@ -19,7 +20,8 @@ groupRef.once("value", function (snapshot) {
   city = (snapshot.val().city);
   startDate = (snapshot.val().sDate) + "T00%3A00%3A00Z";
   endDate = (snapshot.val().eDate) + "T00%3A00%3A00Z";
-  populateTable('');
+  populateTable('',more);
+  populateVoted()
 });
 
 
@@ -68,16 +70,13 @@ function initMap() {
 }
 
 
-//CREATING CLICKED EVENTS AT THE TOP
-//https://www.eventbriteapi.com/v3/events/49674676294/?token=TPQYCAU53IO2TT2FQOOY
-//create new function that populates a table on top of the other one made up of all the objects in firebase ID
-//make sure it is compatible with map, cal and ongoing popularity clicks
+
 
 
 //function to populate the page with rows of data
-function populateTable(queryFilter) {
+function populateTable(queryFilter,page) {
   //URL used to search for events matching group parameters
-  var QueryURL = 'https://www.eventbriteapi.com/v3/events/search/?q=' + queryFilter + '&location.address=' + city + '&start_date.range_start=' + startDate + '&start_date.range_end=' + endDate + '&token=3RS5KP3QRP5LW3OTLAWF'
+  var QueryURL = 'https://www.eventbriteapi.com/v3/events/search/?q=' + queryFilter + '&location.address=' + city + '&start_date.range_start=' + startDate + '&start_date.range_end=' + endDate + '&token=3RS5KP3QRP5LW3OTLAWF&page='+page
   $.ajax({
     url: QueryURL,
     method: "GET"
@@ -109,7 +108,7 @@ function populateTable(queryFilter) {
       collapseDiv.append(mapButton,calendarButton)
       tRow.append(collapseBtn,collapseDiv, Tab3, Tab1, popular, popNumber);
       //Append the row to the page
-      $("tbody").append(tRow);
+      $("#generatedEvents").append(tRow);
 
       //determine how many votes an event has had and display it in vote tab
       database.ref('group/' + name + '/voting/' + response.events[i].id).on("value", function (snapshot) {
@@ -241,10 +240,10 @@ $(document).on('click', '.popular', function () {
   });
 })
 //sorting by most popular items
-function sortTable() {
+function sortTable(rowNo,id) {
 
   var table, rows, switching, i, x, y, shouldSwitch;
-  table = document.getElementById("myTable");
+  table = document.getElementById("myTable"+id);
   switching = true;
   /*Make a loop that will continue until
   no switching has been done:*/
@@ -262,8 +261,8 @@ function sortTable() {
       shouldSwitch = false;
       /*Get the two elements you want to compare,
       one from current row and one from the next:*/
-      x = rows[i].getElementsByTagName("TD")[2];
-      y = rows[i + 1].getElementsByTagName("TD")[2];
+      x = rows[i].getElementsByTagName("TD")[rowNo];
+      y = rows[i + 1].getElementsByTagName("TD")[rowNo];
       //check if the two rows should switch place:
       if (Number(x.innerHTML) < Number(y.innerHTML)) {
         //if so, mark as a switch and break the loop:
@@ -289,7 +288,70 @@ $('#submit').on("click", function (event) {
   console.log(filter)
   populateTable(filter)
 })
+//Adds additional searches to the page
+$('#more').on("click", function (event) {
+  event.preventDefault();
+  more=more+1
+  console.log(more)
+  populateTable(filter,more)
+})
 
-//ADD MORE BUTTON TO DISPLAY MORE EVENTS
-//just add page=2 to the end of the AJAX call
-//iterate with each more click, change function arguments
+
+//get a list of already voted on divs from firebase
+function populateVoted(){
+database.ref('group/' + name + '/voting/').once("value", function (snapshot) { 
+  var eventKeys= Object.keys(snapshot.val())
+  for (i=0;i<eventKeys.length;i++){
+    console.log(eventKeys[i])
+    var QueryURL = 'https://www.eventbriteapi.com/v3/events/'+ eventKeys[i] +'/?token=TPQYCAU53IO2TT2FQOOY'
+    $.ajax({
+      url: QueryURL,
+      method: "GET"
+    }).then(function (response) {
+      console.log(response)
+      
+        // Create a new table row element
+        var collapseBtn= $("<button type='button' data-toggle= 'collapse' data-target='#collapseId" + response.id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.id + "'>Click for more details</button>")
+        var tRow = $("<tr id= '" + response.id + "'>");
+        var Tab1 = $("<td>").text(response.name.text);
+        var Tab2 = $("<td>").text(response.description.text);
+        var Tab3 = $("<td>").text(response.start.local);
+        var collapseDiv= $("<div class='collapse' id='collapseId" + response.id + "'>"+response.description.text+"</div>")
+        
+       
+        console.log(tRow)
+        var calendarButton = $("<button class='calendarButton' eventId='" + response.id + "'venue=" + response.venue_id + ">").text("Add to Calendar");
+        var mapButton = $("<button class='mapButton' venue=" + response.venue_id + ">").text("Map");
+        var popNumber = $("<td></td>")
+        
+        database.ref('group/' + name + '/voting/' + response.id + '/').once("value", function (snapshot) {
+          $(popNumber).text(snapshot.val().counter)
+        })
+        
+        // Append the newly created table data to the table row
+        collapseDiv.append(mapButton,calendarButton)
+        tRow.append(collapseBtn,collapseDiv, Tab3, Tab1, popNumber);
+        //Append the row to the page
+        
+        $("#pickedEvents").append(tRow);
+  
+        //determine how many votes an event has had and display it in vote tab
+        database.ref('group/' + name + '/voting/' + response.id).on("value", function (snapshot) {
+          var vote = document.getElementById("vote" + snapshot.key)
+          $(vote).text(snapshot.val().counter)
+  
+        })
+  
+    });
+  }
+
+ })
+}
+
+//do a for loop with them to make AJAX calls with relevant info
+//append all of that to the top of the page
+
+//CREATING CLICKED EVENTS AT THE TOP
+//
+//create new function that populates a table on top of the other one made up of all the objects in firebase ID
+//make sure it is compatible with map, cal and ongoing popularity clicks
