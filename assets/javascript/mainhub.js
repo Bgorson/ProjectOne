@@ -315,7 +315,7 @@ database.ref('group/' + name + '/voting/').once("value", function (snapshot) {
       console.log(response)
       
         // Create a new table row element
-        var collapseBtn= $("<button type='button' data-toggle= 'collapse' data-target='#collapseId" + response.id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.id + "'>Click for more details</button>")
+        
         var tRow = $("<tr id= '" + response.id + "'>");
         var Tab1 = $("<td>").text(response.name.text);
         var Tab2 = $("<td>").text(response.description.text);
@@ -334,7 +334,7 @@ database.ref('group/' + name + '/voting/').once("value", function (snapshot) {
         
         // Append the newly created table data to the table row
         collapseDiv.append(mapButton,calendarButton)
-        tRow.append(collapseBtn,collapseDiv, Tab3, Tab1, popNumber);
+        tRow.append(collapseBtn, collapseDiv, Tab3, Tab1, popNumber);
         //Append the row to the page
         
         $("#pickedEvents").append(tRow);
