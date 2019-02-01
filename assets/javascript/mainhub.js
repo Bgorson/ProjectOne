@@ -85,9 +85,9 @@ function populateTable(queryFilter) {
     console.log(response)
     for (i = 0; i < response.events.length; i++) {
       // Create a new table row element
-      var collapseBtn= $("<button type='button' data-toggle= 'collapse' data-target='#collapseId" + response.events[i].id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.events[i].id + "'>Click for more details</button>")
+      // var collapseBtn= $("<button type='button' data-toggle= 'collapse' data-target='#collapseId" + response.events[i].id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.events[i].id + "'>Click for more details</button>")
       var tRow = $("<tr id= '" + response.events[i].id + "'>");
-      var Tab1 = $("<td>").text(response.events[i].name.text);
+      var Tab1 = $("<td data-toggle= 'collapse' data-target='#collapseId" + response.events[i].id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.events[i].id+"'>").text(response.events[i].name.text);
       var Tab2 = $("<td>").text(response.events[i].description.text);
       var Tab3 = $("<td>").text(response.events[i].start.local);
       var collapseDiv= $("<div class='collapse' id='collapseId" + response.events[i].id + "'>"+response.events[i].description.text+"</div>")
@@ -107,7 +107,8 @@ function populateTable(queryFilter) {
 
       // Append the newly created table data to the table row
       collapseDiv.append(mapButton,calendarButton)
-      tRow.append(collapseBtn,collapseDiv, Tab3, Tab1, popular, popNumber);
+      // tRow.append(collapseBtn,collapseDiv, Tab3, Tab1, popular, popNumber);
+      tRow.append(collapseDiv, Tab3, Tab1, popular, popNumber);
       //Append the row to the page
       $("tbody").append(tRow);
 
