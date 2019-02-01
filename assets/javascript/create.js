@@ -51,33 +51,29 @@ $('#submit').on("click", function(event){
   //location field
   var city = document.getElementById("city").value;
   var state = document.getElementById("state").value;
-
-  database.ref('group/' + name).on("value",function(snapshot){
-    if (snapshot.exists()){
-      // console.log("repeat!")
-      // console.log(snapshot.val());
-      $("#error").text("Duplicate Name!")
-      alert("Duplicate!");
-      return false;
-     
-    }
-   
-   });
-  
-    if(name == ''||sDate== ''|| eDate==''|| city==''||state==''){
+  if(name == ''||sDate== ''|| eDate==''|| city==''||state==''){
     $("#error").text("Please complete all fields")
       return false;
   }
-
+  database.ref('group/' + name).on("value",function(snapshot){
+    if (snapshot.exists()){
+      console.log("repeat!")
+      $("#error").text("")
+      $("#error").text("Duplicate Name!")
+      return false;
+    }
+    else{
+      console.log("unique");
+      window.location.href="./mainhub.html"
+      setGroupInfo(name, city,state, sDate,eDate)
+       //putting group name in local storage
+       localStorage.setItem("groupName",name);
+   console.log(window.location.href);
+    }
+   });
   
-
-
   //submit button
-  window.location.href="./mainhub.html"
-   setGroupInfo(name, city,state, sDate,eDate)
-    //putting group name in local storage
-    localStorage.setItem("groupName",name);
-console.log(window.location.href);
+
 })
 
 
