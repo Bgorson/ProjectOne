@@ -85,10 +85,13 @@ function populateTable(queryFilter) {
     console.log(response)
     for (i = 0; i < response.events.length; i++) {
       // Create a new table row element
-      var tRow = $("<tr Id= '" + response.events[i].id + "'>");
+      var collapseBtn= $("<button type='button' data-toggle= 'collapse' data-target='#collapseId" + response.events[i].id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.events[i].id + "'>Click for more details</button>")
+      var tRow = $("<tr id= '" + response.events[i].id + "'>");
       var Tab1 = $("<td>").text(response.events[i].name.text);
       var Tab2 = $("<td>").text(response.events[i].description.text);
       var Tab3 = $("<td>").text(response.events[i].start.local);
+      var collapseDiv= $("<div class='collapse' id='collapseId" + response.events[i].id + "'>"+response.events[i].description.text+"</div>")
+      
       var popular = $("<button class='popular' eventId='" + response.events[i].id + "'>").text("Interested?")
       var calendarButton = $("<button class='calendarButton' eventId='" + response.events[i].id + "'venue=" + response.events[i].venue_id + ">").text("Add to Calendar");
       var mapButton = $("<button class='mapButton' venue=" + response.events[i].venue_id + ">").text("Map");
@@ -103,7 +106,8 @@ function populateTable(queryFilter) {
       });
 
       // Append the newly created table data to the table row
-      tRow.append(mapButton, calendarButton, Tab3, Tab1, popular, popNumber);
+      collapseDiv.append(mapButton,calendarButton)
+      tRow.append(collapseBtn,collapseDiv, Tab3, Tab1, popular, popNumber);
       //Append the row to the page
       $("tbody").append(tRow);
 
@@ -219,7 +223,7 @@ $(document).on('click', '.popular', function () {
  //Checks if button has ever been clicked
   database.ref('group/' + name + '/voting/' + eventId + '/').once("value", function (snapshot) {  
     if (snapshot.child("counter").exists()) {
-      button.html("")
+      button.css("visibility","hidden")
       popularity = snapshot.val().counter;
       console.log(popularity)
       popularity++
@@ -228,7 +232,7 @@ $(document).on('click', '.popular', function () {
       });
       //if it hasn't been clicked, it sets it to 1 and creates it
     } else {
-      button.html("")
+      button.css("visibility","hidden")
       popularity = 1;
       database.ref('group/' + name + '/voting/' + eventId + '/').set({
         counter: popularity
