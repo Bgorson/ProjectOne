@@ -144,7 +144,8 @@ $(document).on('click', '.mapButton', function () {
 });
 
 //Uses OuiCal to creates calendar invite
-$(document).on('click', '.calendarButton', function () {
+$(document).on('click', '.calendarButton', function (event) {
+  event.preventDefault();
   var calendarButtonDiv = this;
   var venueid = $(this).attr("venue");
   var eventId = $(this).attr("eventid");
@@ -282,12 +283,15 @@ function sortTable(rowNo,id) {
 //Filter Button
 //empties the current page and re-populates table with an added Q value
 $('#submit').on("click", function (event) {
-  $("tbody").empty()
+  $("#generatedEvents").empty()
+  $("#pickedEvents").empty();
   event.preventDefault();
   filter = document.getElementById("filter").value;
   console.log(filter)
+  populateVoted()
   populateTable(filter)
 })
+
 //Adds additional searches to the page
 $('#more').on("click", function (event) {
   event.preventDefault();
