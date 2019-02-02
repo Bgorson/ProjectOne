@@ -2,28 +2,52 @@
 <html lang="en-us">
 
 <head>
+  
+  <!--Established character encoding set to be used by web browser.-->
   <meta charset="UTF-8">
+   
+  <!--Set tab title to Create Group-->
   <title>Create Group</title>
+
+  <!--Added toon squad favicon-->
   <link rel="icon" href="./assets/images/favicon-32x32.png" sizes="16x16" type="image" />
+  
+  <!--Responsive meta tag-->  
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!--Bootstrap-->  
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  
+  <!--Font Awesome-->  
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
     crossorigin="anonymous">
+  
+  <!--Added Background image-->
   <img id="bg" src="./assets/images/1.png" style="position: fixed; height:100%; width:100%">
+  
+  <!--Reference contact us css file-->  
   <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/create.css" />
+
 </head>
 
 <body>
-  <!--Navbar and Hamburger Menu Added-->
+
+  <!-- Container Div that spans full width of screen-->
   <div class="container-fullwidth">
+    
+    <!--Navbar Added-->
     <nav class="navbar navbar-expand-lg navbar-dark">
+
+      <!--Added Home icon and link to home page-->
       <a class="navbar-brand" href="index.html"><i class="fas fa-home fa-lg"> Ven-You</i></a>
+      
+      <!--Navbar Toggler Added-->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
         aria-controls="navbarNavDropdown" aria-expanded="true" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <!--Hamburger Menu Dropdown created-->
+      <!--Added links to the navbar-->
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -43,17 +67,23 @@
     </nav>
   </div>
 
-  <!--Added create group form-->
+  <!-- Set Container -->
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
+
+        <!-- Top Create your friend group header -->
         <div class="top-card">
           <div class="card card-default">
             <div class="card-header">Create Your Friend Group!</div>
           </div>
         </div>
+
+        <!-- Added form instructions -->
         <div class="card card-default">
           <div class="card-header">Please make sure to fill all the fields below.</div>
+          
+          <!-- Create Group form -->
           <div class="card-body">
             <form role="form">
               <div class="form-group">
@@ -67,7 +97,6 @@
               <div class="form-group">
                 <label for="end-date">Event End Date (MM-DD-YYYY)</label>
                 <input type="text" class="form-control" id="end">
-
               </div>
               <div class="form-group">
                 <label for="city">City of your event</label>
@@ -77,17 +106,30 @@
                 <label for="state">State of your event</label>
                 <input type="text" class="form-control" id="state" required>
               </div>
+              
+              <!-- Submit button -->
               <a class="btn btn-info btn-lg" id="submit" role="button">Submit</a>
+              
+              <!-- Error message appears here if user clicks submit button 
+                without filling out all fields -->
               <div id="error"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  
+  <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  
+  <!-- Bootstrap's javascript file  -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  
+  <!-- Firebase Reference -->
   <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+  
+  <!-- Reference Create js file -->
   <script src="./assets/javascript/create.js"></script>
 </body>
 
