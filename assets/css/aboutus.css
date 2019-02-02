@@ -1,4 +1,4 @@
-/* Assigned the same aswesome font family to keep the font of the body consistent with that of the navbar */
+/* Assigned the same font aswesome font family to keep the font of the body consistent with that of the navbar */
 body,
 .card,
 #submit {
@@ -32,8 +32,9 @@ body,
     font-size: 1.5em;
     font-weight: bold;
     text-align: center;
-    margin-top: 1em;
+    margin-top: 0.8em;
 }
+
 /* Increased the size of the about the meet the Ven-You team, How Ven-You works, and the issues, concerns and compliments card headers and bolded their text. */
 .card-header {
     font-size: 1.2em;
@@ -53,5 +54,5 @@ body,
 
 /* Added space between the card headers and card bodies. */
 .card {
-    margin-bottom: 1em;
+    margin-bottom: 0.8em;
 }
