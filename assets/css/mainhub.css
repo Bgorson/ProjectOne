@@ -65,7 +65,12 @@ body,
 .mapButton {
   display: block
 }
-
+.mapButton:hover{
+  cursor: pointer;
+}
+.calendarButton:hover{
+  cursor: pointer;
+}
 .calendarButton {
   display: block
 }
@@ -92,6 +97,7 @@ body,
 #popBtn:hover{
   cursor:pointer;
 }
+
 
 
 @media only screen and (max-width: 760px),
