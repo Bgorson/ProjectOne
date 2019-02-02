@@ -30,7 +30,7 @@ var groupRef = (database.ref('group/' + name));
 groupRef.once("value", function (snapshot) {
   city = (snapshot.val().city);
   startDate = (snapshot.val().sDate) + "T00%3A00%3A00Z";
-  endDate = (snapshot.val().eDate) + "T00%3A00%3A00Z";
+  endDate = (snapshot.val().eDate) + "T23%3A00%3A00Z";
   populateTable('', more);
   populateVoted()
 });
@@ -95,7 +95,7 @@ function populateTable(queryFilter, page) {
     console.log(response)
     for (i = 0; i < response.events.length; i++) {
       // Create a new table row element
-      var collapseBtn = $("<button type='button' data-toggle= 'collapse' data-target='#collapseId" + response.events[i].id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.events[i].id + "'> <i class='fa fa-chevron-down'></i></button>")
+      var collapseBtn = $("<button class='collapseBtn' type='button' data-toggle= 'collapse' data-target='#collapseId" + response.events[i].id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.events[i].id + "'> <i class='fa fa-chevron-down'></i></button>")
       var tRow = $("<tr id= '" + response.events[i].id + "'>");
       var Tab1 = $("<td>").text(response.events[i].name.text);
       var Tab2 = $("<td>").text(response.events[i].description.text);
@@ -109,11 +109,11 @@ function populateTable(queryFilter, page) {
       console.log(day + "d")
       console.log(year + 'y')
       console.log(time + 't')
-      eventDateRow = month + "-" + day + "-" + time
+      eventDateRow = month + "-" + day + " " + time
       var Tab3 = $("<td>").text(eventDateRow);
       var collapseDiv = $("<div class='collapse' id='collapseId" + response.events[i].id + "'>" + response.events[i].description.text + "</div>")
 
-      var popular = $("<button class='popular' eventId='" + response.events[i].id + "'>").text("Interested?")
+      var popular = $("<button id= 'popBtn' class='popular' eventId='" + response.events[i].id + "'>").text("Interested?")
       var calendarButton = $("<button class='calendarButton' eventId='" + response.events[i].id + "'venue=" + response.events[i].venue_id + ">").text("Add to Calendar");
       var mapButton = $("<button class='mapButton' venue=" + response.events[i].venue_id + ">").text("Map");
       var popNumber = $("<td id='vote" + response.events[i].id + "'eventId='" + response.events[i].id + "'></td>")
@@ -344,14 +344,14 @@ function populateVoted() {
         var Tab2 = $("<td>").text(response.description.text);
         var empty= $("<td>").text(" ");
         var collapseDiv = $("<div class='collapse' id='collapseIdVoted" + response.id + "'>" + response.description.text + "</div>")
-        var collapseBtn = $("<button type='button' data-toggle= 'collapse' data-target='#collapseIdVoted" + response.id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.id + "'><i class='fa fa-chevron-down'></i></button>")
+        var collapseBtn = $("<button class='collapseBtn' type='button' data-toggle= 'collapse' data-target='#collapseIdVoted" + response.id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.id + "'><i class='fa fa-chevron-down'></i></button>")
         
         var eventDateRow = response.start.local
         var month = eventDateRow.slice(5, 7)
         var year = eventDateRow.slice(0, 4)
         var day = eventDateRow.slice(8, 10)
         var time = eventDateRow.slice(11, 19)
-        eventDateRow = month + "-" + day + "-" + time
+        eventDateRow = month + "-" + day + " " + time
         var Tab3 = $("<td>").text(eventDateRow);
         var calendarButton = $("<button class='calendarButton' eventId='" + response.id + "'venue=" + response.venue_id + ">").text("Add to Calendar");
         var mapButton = $("<button class='mapButton' venue=" + response.venue_id + ">").text("Map");

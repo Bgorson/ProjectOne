@@ -80,6 +80,18 @@ body,
 #sort:hover{
   cursor:pointer;
 }
+#more{
+  z-index: 5000;
+  background: #56b4d0;
+  color: white;
+  
+}
+.collapseBtn:hover{
+  cursor:pointer;
+}
+#popBtn:hover{
+  cursor:pointer;
+}
 
 
 @media only screen and (max-width: 760px),
