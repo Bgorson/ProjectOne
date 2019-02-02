@@ -5,7 +5,7 @@ var eLat
 var eLng
 //filter variable
 var filter = '';
-var more= 1;
+var more = 1;
 // firebase group Info
 var city
 var startDate
@@ -20,7 +20,7 @@ groupRef.once("value", function (snapshot) {
   city = (snapshot.val().city);
   startDate = (snapshot.val().sDate) + "T00%3A00%3A00Z";
   endDate = (snapshot.val().eDate) + "T00%3A00%3A00Z";
-  populateTable('',more);
+  populateTable('', more);
   populateVoted()
 });
 
@@ -74,9 +74,9 @@ function initMap() {
 
 
 //function to populate the page with rows of data
-function populateTable(queryFilter,page) {
+function populateTable(queryFilter, page) {
   //URL used to search for events matching group parameters
-  var QueryURL = 'https://www.eventbriteapi.com/v3/events/search/?q=' + queryFilter + '&location.address=' + city + '&start_date.range_start=' + startDate + '&start_date.range_end=' + endDate + '&token=3RS5KP3QRP5LW3OTLAWF&page='+page
+  var QueryURL = 'https://www.eventbriteapi.com/v3/events/search/?q=' + queryFilter + '&location.address=' + city + '&start_date.range_start=' + startDate + '&start_date.range_end=' + endDate + '&token=3RS5KP3QRP5LW3OTLAWF&page=' + page
   $.ajax({
     url: QueryURL,
     method: "GET"
@@ -84,29 +84,29 @@ function populateTable(queryFilter,page) {
     console.log(response)
     for (i = 0; i < response.events.length; i++) {
       // Create a new table row element
-      var collapseBtn= $("<button type='button' class='btn' data-toggle= 'collapse' data-target='#collapseId" + response.events[i].id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.events[i].id + "'> <i class='fa fa-chevron-down'></i></button>")
+      var collapseBtn = $("<button type='button' class='btn' data-toggle= 'collapse' data-target='#collapseId" + response.events[i].id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.events[i].id + "'> <i class='fa fa-chevron-down'></i></button>")
       var tRow = $("<tr id= '" + response.events[i].id + "'>");
       var Tab1 = $("<td>").text(response.events[i].name.text);
       var Tab2 = $("<td>").text(response.events[i].description.text);
       //Fixed Date display
-      var eventDateRow= response.events[i].start.local
-      var month= eventDateRow.slice(5,7)
-      var year=eventDateRow.slice(0,4)
-      var day=eventDateRow.slice(8,10)
-      var time=eventDateRow.slice(11,19)
-      console.log(month+ "month")
-      console.log(day+ "d")
-      console.log(year+ 'y')
-      console.log(time+ 't')
-      eventDateRow= month+"-"+day+"-"+time
+      var eventDateRow = response.events[i].start.local
+      var month = eventDateRow.slice(5, 7)
+      var year = eventDateRow.slice(0, 4)
+      var day = eventDateRow.slice(8, 10)
+      var time = eventDateRow.slice(11, 19)
+      console.log(month + "month")
+      console.log(day + "d")
+      console.log(year + 'y')
+      console.log(time + 't')
+      eventDateRow = month + "-" + day + "-" + time
       var Tab3 = $("<td>").text(eventDateRow);
-      var collapseDiv= $("<div class='collapse' id='collapseId" + response.events[i].id + "'>"+response.events[i].description.text+"</div>")
-      
+      var collapseDiv = $("<div class='collapse' id='collapseId" + response.events[i].id + "'>" + response.events[i].description.text + "</div>")
+
       var popular = $("<button class='popular' eventId='" + response.events[i].id + "'>").text("Interested?")
       var calendarButton = $("<button class='calendarButton' eventId='" + response.events[i].id + "'venue=" + response.events[i].venue_id + ">").text("Add to Calendar");
       var mapButton = $("<button class='mapButton' venue=" + response.events[i].venue_id + ">").text("Map");
       var popNumber = $("<td id='vote" + response.events[i].id + "'eventId='" + response.events[i].id + "'></td>")
-      
+
       //set firebase data with relevant information for cal invites
       database.ref('group/' + name + '/' + response.events[i].id + '/').set({
         startDate: response.events[i].start.local,
@@ -116,9 +116,9 @@ function populateTable(queryFilter,page) {
       });
 
       // Append the newly created table data to the table row
-      collapseDiv.append(mapButton,calendarButton)
+      collapseDiv.append(mapButton, calendarButton)
       Tab1.append(collapseDiv)
-      tRow.append(collapseBtn,Tab3, Tab1, popular, popNumber);
+      tRow.append(collapseBtn, Tab3, Tab1, popular, popNumber);
       //Append the row to the page
       $("#generatedEvents").append(tRow);
 
@@ -169,7 +169,7 @@ $(document).on('click', '.calendarButton', function (event) {
     eventDescription = snapshot.val().description;
   });
 
-//completes AJAX call on venue title to find location address
+  //completes AJAX call on venue title to find location address
   $.ajax({
     url: QueryURL,
     method: "GET"
@@ -232,10 +232,10 @@ $(document).on('click', '.calendarButton', function (event) {
 $(document).on('click', '.popular', function () {
   var button = $(this)
   var eventId = $(this).attr("eventId")
- //Checks if button has ever been clicked
-  database.ref('group/' + name + '/voting/' + eventId + '/').once("value", function (snapshot) {  
+  //Checks if button has ever been clicked
+  database.ref('group/' + name + '/voting/' + eventId + '/').once("value", function (snapshot) {
     if (snapshot.child("counter").exists()) {
-      button.css("visibility","hidden")
+      button.css("visibility", "hidden")
       popularity = snapshot.val().counter;
       console.log(popularity)
       popularity++
@@ -244,7 +244,7 @@ $(document).on('click', '.popular', function () {
       });
       //if it hasn't been clicked, it sets it to 1 and creates it
     } else {
-      button.css("visibility","hidden")
+      button.css("visibility", "hidden")
       popularity = 1;
       database.ref('group/' + name + '/voting/' + eventId + '/').set({
         counter: popularity
@@ -253,10 +253,10 @@ $(document).on('click', '.popular', function () {
   });
 })
 //sorting by most popular items
-function sortTable(rowNo,id) {
+function sortTable(rowNo, id) {
 
   var table, rows, switching, i, x, y, shouldSwitch;
-  table = document.getElementById("myTable"+id);
+  table = document.getElementById("myTable" + id);
   switching = true;
   /*Make a loop that will continue until
   no switching has been done:*/
@@ -307,67 +307,67 @@ $('#submit').on("click", function (event) {
 //Adds additional searches to the page
 $('#more').on("click", function (event) {
   event.preventDefault();
-  more=more+1
+  more = more + 1
   console.log(more)
-  populateTable(filter,more)
+  populateTable(filter, more)
 })
 
 
 //get a list of already voted on divs from firebase
-function populateVoted(){
-database.ref('group/' + name + '/voting/').once("value", function (snapshot) { 
-  var eventKeys= Object.keys(snapshot.val())
-  for (i=0;i<eventKeys.length;i++){
-    console.log(eventKeys[i])
-    var QueryURL = 'https://www.eventbriteapi.com/v3/events/'+ eventKeys[i] +'/?token=TPQYCAU53IO2TT2FQOOY'
-    $.ajax({
-      url: QueryURL,
-      method: "GET"
-    }).then(function (response) {
-      console.log(response)
-      
+function populateVoted() {
+  database.ref('group/' + name + '/voting/').once("value", function (snapshot) {
+    var eventKeys = Object.keys(snapshot.val())
+    for (i = 0; i < eventKeys.length; i++) {
+      console.log(eventKeys[i])
+      var QueryURL = 'https://www.eventbriteapi.com/v3/events/' + eventKeys[i] + '/?token=TPQYCAU53IO2TT2FQOOY'
+      $.ajax({
+        url: QueryURL,
+        method: "GET"
+      }).then(function (response) {
+        console.log(response)
+
         // Create a new table row element
-        
+
         var tRow = $("<tr id= '" + response.id + "'>");
-        var Tab1 = $("<td id='name"+response.id+"'>").text(response.name.text);
+        var Tab1 = $("<td id='name" + response.id + "'>").text(response.name.text);
         var Tab2 = $("<td>").text(response.description.text);
-          var collapseDiv= $("<div class='collapse' id='collapseIdVoted" + response.id + "'>"+response.description.text+"</div>")
-        var collapseBtn= $("<button type='button' data-toggle= 'collapse' data-target='#collapseIdVoted" + response.id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.id + "'><i class='fa fa-chevron-down'></i></button>")
-       
-        var eventDateRow= response.start.local
-        var month= eventDateRow.slice(5,7)
-        var year=eventDateRow.slice(0,4)
-        var day=eventDateRow.slice(8,10)
-        var time=eventDateRow.slice(11,19)
-        eventDateRow= month+"-"+day+"-"+time
+        var collapseDiv = $("<div class='collapse' id='collapseIdVoted" + response.id + "'>" + response.description.text + "</div>")
+        var collapseBtn = $("<button type='button' data-toggle= 'collapse' data-target='#collapseIdVoted" + response.id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.id + "'><i class='fa fa-chevron-down'></i></button>")
+
+        var eventDateRow = response.start.local
+        var month = eventDateRow.slice(5, 7)
+        var year = eventDateRow.slice(0, 4)
+        var day = eventDateRow.slice(8, 10)
+        var time = eventDateRow.slice(11, 19)
+        eventDateRow = month + "-" + day + "-" + time
         var Tab3 = $("<td>").text(eventDateRow);
         var calendarButton = $("<button class='calendarButton' eventId='" + response.id + "'venue=" + response.venue_id + ">").text("Add to Calendar");
         var mapButton = $("<button class='mapButton' venue=" + response.venue_id + ">").text("Map");
         var popNumber = $("<td></td>")
-        
+
         database.ref('group/' + name + '/voting/' + response.id + '/').once("value", function (snapshot) {
           $(popNumber).text(snapshot.val().counter)
         })
-        
+
         // Append the newly created table data to the table row
-        collapseDiv.append(mapButton,calendarButton)
+        collapseDiv.append(mapButton, calendarButton)
         Tab1.append(collapseDiv)
         tRow.append(collapseBtn, Tab3, Tab1, popNumber);
         //Append the row to the page
-        
+
         $("#pickedEvents").append(tRow);
-  
+
         //determine how many votes an event has had and display it in vote tab
         database.ref('group/' + name + '/voting/' + response.id).on("value", function (snapshot) {
           var vote = document.getElementById("vote" + snapshot.key)
           $(vote).text(snapshot.val().counter)
-  
-        })
-  
-    });
-  }
 
- })
+        })
+
+      });
+    }
+
+  })
 }
 
 //do a for loop with them to make AJAX calls with relevant info

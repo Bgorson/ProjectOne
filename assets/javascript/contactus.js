@@ -26,28 +26,25 @@ function collectContact(groupName, yourName, yourEmail, yourNumber, yourComments
 
 //submit button
 $("#submit").on("click", function () {
-event.preventDefault();
+  event.preventDefault();
 
-$("#success").text("Thanks! We've received your note and will be in touch shortly!");
+  $("#success").text("Thanks! We've received your note and will be in touch shortly!");
 
-var gName = document.getElementById("group-name").value;
-var yName = document.getElementById("your-name").value;
-var yEmail = document.getElementById("your-email").value;
-var yNumber = document.getElementById("your-number").value;
-var yComments = document.getElementById("comments").value;
- 
-collectContact(gName, yName, yEmail, yNumber, yComments)
+  var gName = document.getElementById("group-name").value;
+  var yName = document.getElementById("your-name").value;
+  var yEmail = document.getElementById("your-email").value;
+  var yNumber = document.getElementById("your-number").value;
+  var yComments = document.getElementById("comments").value;
 
- $("#group-name").val("");
- $("#your-name").val("");
- $("#your-email").val("");
- $("#your-number").val("");
- $("#comments").val("");
+  collectContact(gName, yName, yEmail, yNumber, yComments)
 
- 
-
-
-}) 
+  $("#group-name").val("");
+  $("#your-name").val("");
+  $("#your-email").val("");
+  $("#your-number").val("");
+  $("#comments").val("");
 
 
 
+
+})

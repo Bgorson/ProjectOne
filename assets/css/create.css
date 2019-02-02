@@ -1,13 +1,15 @@
-body, .card, #submit{
+body,
+.card,
+#submit {
     font-family: "Font Awesome 5 Free";
 }
 
 .container-fullwidth {
-    padding-top: 1em; 
+    padding-top: 1em;
 }
 
 .navbar-dark {
-    background:#56b4d0;
+    background: #56b4d0;
 }
 
 .navbar-nav {
@@ -23,26 +25,30 @@ body, .card, #submit{
 .card-header {
     font-size: 1.2em;
     font-weight: bold;
-    
+
 }
+
 .card-body {
     font-size: 1.1em;
 }
 
 #submit {
     color: white;
-    background:#56b4d0;
+    background: #56b4d0;
 }
+
 .top-card {
     font-size: 1.5em;
     font-weight: bold;
     text-align: center;
     margin-top: 1em;
 }
+
 .card {
     margin-bottom: 1em;
 }
-#error{
-    color:red;
+
+#error {
+    color: red;
     text-align: center;
 }
