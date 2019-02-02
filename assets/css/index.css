@@ -1,46 +1,41 @@
-/* Assigned the same font aswesome font family to keep the font of the body consistent with that of the navbar */
 body {
     font-family: "Font Awesome 5 Free";
 }
 
-/* Added padding above the nav bar for styling */
 .container-fullwidth {
     padding-top: 1em;
 }
 
-/* Updated nav bar color */
+.container {
+    color: white;
+}
+
 .navbar-dark {
     background: #56b4d0;
 }
 
-/* Increased font size and bolded the text of the navbar links. Moved additional links to the left side of the page */
+.navbar-toggler-icon {
+    color: white;
+}
+
 .navbar-nav {
     margin-left: auto;
     font-weight: bold;
     font-size: 1.1em;
 }
 
-/* Added padding between the links in the navbar */
-.nav-item {
-    padding-right: 1.5em;
-}
-
-/* Changed the color of the text on the page to white*/
-.container {
-    color: white;
-}
-
-/* Added space between the card headers and card bodies. */
 .card {
-    margin-top: 0.8em;
+    margin-top: 1em;
 }
 
-/* Centered join group and create group buttons */
 .buttons {
     text-align: center;
 }
 
-/* Italicized secondary titles */
 .secondary-title {
     font-style: italic;
+}
+
+.nav-item {
+    padding-right: 1.5em;
 }
