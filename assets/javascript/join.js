@@ -27,9 +27,7 @@ $(document).on("click", ".joinGroup", function () {
 
 $(".getLocal").on("click", function () {
   var storedEvents = localStorage.getItem("joinGroup");
-  console.log(storedEvents);
   storedEvents = JSON.parse(storedEvents);
-  console.log(storedEvents[0].eventId);
   for (i = 0; i < storedEvents.length; i++) {
     var div = $("<div class= 'btnText'>" + storedEvents[i].eventId + "<div>");
     $(".buttons").append(div);
@@ -43,21 +41,16 @@ $("#join").on("click", function () { // pulls from group object from firebase
   var originalInput = $(".form-control").val();
   var formInput = $(".form-control").val().toLowerCase();
   groupRef.on('value', function (snapshot) {
-    //console.log(snapshot.val());
     var databaseGroup = snapshot.val();
     if (databaseGroup[formInput]) { // checks if input is in firebase
       $("#groupDisplay").css("color", "black")
       var groupSelected = databaseGroup[formInput] // <-- This contains all object information about Group. Can pass to mainhub
       $(".display-groups").html("<button class ='btn btn-info btn-lg'>Click here to access the " + originalInput + " Group</button>");
-
-      console.log(groupSelected.name);
       var groupName = groupSelected.name
       localStorage.setItem("groupName", groupName)
       $('.display-groups').click(function () {
         window.location.href = 'mainhub.html';
       })
-
-      //console.log("here")
 
     } else {
       $("#groupDisplay").css("color", "red")
