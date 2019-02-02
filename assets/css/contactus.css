@@ -1,53 +1,64 @@
+/* Assigned the same font aswesome font family to keep the font of the body consistent with that of the navbar */
 body,
 .card,
 #submit {
     font-family: "Font Awesome 5 Free";
 }
 
+/* Added padding above the nav bar for styling */
 .container-fullwidth {
     padding-top: 1em;
 }
 
+/* Updated nav bar color */
 .navbar {
     background: #56b4d0;
 }
 
+/* Increased font size and bolded the text of the navbar links. Moved additional links to the left side of the page */
 .navbar-nav {
     margin-left: auto;
     font-weight: bold;
     font-size: 1.1em;
 }
 
+/* Added padding between the links in the navbar */
 .nav-item {
     padding-right: 1.5em;
 }
 
+/* Increased the size, bolded and centered the text of the Contact us header. Added space between the nave bar and and about us header*/
+.top-card {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 0.8em;
+}
+
+/* Increased the size of Comments, Questions, Compliments? card header and bolded the text. */
 .card-header {
     font-size: 1.2em;
     font-weight: bold;
 }
 
+/* Increased card body text size */
 .card-body {
     font-size: 1.1em;
 }
 
+/* Changed the color of the submit button and changed the text color of the submit button to white */
 #submit {
     color: white;
     background: #56b4d0;
 }
 
-.top-card {
-    font-size: 1.5em;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 1em;
-}
-
+/* Added space between the card headers and card bodies. */
 .card {
-    margin-bottom: 1em;
+    margin-bottom: 0.8em;
 }
 
+/* Highlighted submission success text in neon green and center that is displayed after user clicks submit button. */
 #success {
     background: #39ff14;
-    text-align: center;
+    text-align: center; 
 }
