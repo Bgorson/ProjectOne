@@ -24,11 +24,6 @@ function setGroupInfo(groupName, eventCity, eventState, startDate, endDate) {
     events: {}
   });
 }
-// groupRef.once("value",function(snapshot){
-//   console.log(snapshot.val())
-//  })
-
-
 
 //Local Storage
 var eventInfo = [];
@@ -36,7 +31,6 @@ $('#submit').on("click", function (event) {
   event.preventDefault();
 
   var name = document.getElementById("name").value.toLowerCase();
-  console.log(name)
   //sDate field
   var sDate = document.getElementById("start").value;
   var sMonth = sDate.slice(0, 2)
@@ -58,20 +52,16 @@ $('#submit').on("click", function (event) {
   }
   database.ref('group/' + name).on("value", function (snapshot) {
     if (snapshot.exists()) {
-      console.log("repeat!")
       $("#error").text("")
       $("#error").text("Duplicate Name!")
       return false;
     } else {
-      console.log("unique");
       window.location.href = "./mainhub.html"
       setGroupInfo(name, city, state, sDate, eDate)
       //putting group name in local storage
       localStorage.setItem("groupName", name);
-      console.log(window.location.href);
     }
   });
 
-  //submit button
 
 })
