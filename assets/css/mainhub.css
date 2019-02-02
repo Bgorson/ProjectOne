@@ -69,6 +69,18 @@ body,
 .calendarButton {
   display: block
 }
+.container{
+  padding-left:0px;
+}
+#empty{
+  width:100px;
+  height:50px;
+}
+
+#sort:hover{
+  cursor:pointer;
+}
+
 
 @media only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px) {
