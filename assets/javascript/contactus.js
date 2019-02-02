@@ -9,10 +9,14 @@ var config = {
 };
 firebase.initializeApp(config);
 
+// Get a reference to the database service
 var database = firebase.database();
 
+//Save data to contact/ path in firebase
 var contactRef = database.ref("contact/")
 
+//Function that will write the data inputted by user in all fields of the contact us form to data. 
+//.push was used so firebase will generate a unique key to help us differentiate between each contact us submission.
 function collectContact(groupName, yourName, yourEmail, yourNumber, yourComments) {
   database.ref('contact/').push({
     gName: groupName,
@@ -24,10 +28,11 @@ function collectContact(groupName, yourName, yourEmail, yourNumber, yourComments
   });
 }
 
-//submit button
+//Used to get value of the input text in each field after user clicks the submit button.
 $("#submit").on("click", function () {
   event.preventDefault();
 
+  //Sucess message that appears in the success div id when user clicks submit.
   $("#success").text("Thanks! We've received your note and we will be in touch shortly!");
 
   var gName = document.getElementById("group-name").value;
@@ -43,8 +48,5 @@ $("#submit").on("click", function () {
   $("#your-email").val("");
   $("#your-number").val("");
   $("#comments").val("");
-
-
-
 
 })
