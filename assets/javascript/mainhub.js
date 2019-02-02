@@ -84,7 +84,7 @@ function populateTable(queryFilter, page) {
     console.log(response)
     for (i = 0; i < response.events.length; i++) {
       // Create a new table row element
-      var collapseBtn = $("<button type='button' class='btn' data-toggle= 'collapse' data-target='#collapseId" + response.events[i].id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.events[i].id + "'> <i class='fa fa-chevron-down'></i></button>")
+      var collapseBtn = $("<button type='button' data-toggle= 'collapse' data-target='#collapseId" + response.events[i].id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.events[i].id + "'> <i class='fa fa-chevron-down'></i></button>")
       var tRow = $("<tr id= '" + response.events[i].id + "'>");
       var Tab1 = $("<td>").text(response.events[i].name.text);
       var Tab2 = $("<td>").text(response.events[i].description.text);
@@ -331,9 +331,10 @@ function populateVoted() {
         var tRow = $("<tr id= '" + response.id + "'>");
         var Tab1 = $("<td id='name" + response.id + "'>").text(response.name.text);
         var Tab2 = $("<td>").text(response.description.text);
+        var empty= $("<td>").text(" ");
         var collapseDiv = $("<div class='collapse' id='collapseIdVoted" + response.id + "'>" + response.description.text + "</div>")
         var collapseBtn = $("<button type='button' data-toggle= 'collapse' data-target='#collapseIdVoted" + response.id + "' aria-expanded='true' aria-controls='collapseId' Id= '" + response.id + "'><i class='fa fa-chevron-down'></i></button>")
-
+        
         var eventDateRow = response.start.local
         var month = eventDateRow.slice(5, 7)
         var year = eventDateRow.slice(0, 4)
@@ -352,7 +353,7 @@ function populateVoted() {
         // Append the newly created table data to the table row
         collapseDiv.append(mapButton, calendarButton)
         Tab1.append(collapseDiv)
-        tRow.append(collapseBtn, Tab3, Tab1, popNumber);
+        tRow.append(collapseBtn, Tab3, Tab1, empty, popNumber);
         //Append the row to the page
 
         $("#pickedEvents").append(tRow);

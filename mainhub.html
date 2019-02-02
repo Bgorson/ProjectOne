@@ -68,6 +68,7 @@
   </div>
 
   <div class="container" id="mainone">
+    <div>
     <div class="row">
       <div class="col-lg-12">
         <table class="table" id="myTable2">
@@ -76,7 +77,9 @@
               <th scope="col">Buttons</th>
               <th scope="col">Date</th>
               <th scope="col">Description</th>
-              <th scope="col" type="button" onclick="sortTable(2,2)">Votes</th>
+              <th scope="col" id='empty'></th>
+              <th scope="col" type="button" id="sort" onclick="sortTable(2,2)">Votes</th>
+            </thead>
             </tr>
           <tbody id='pickedEvents'>
           </tbody>
@@ -84,9 +87,9 @@
       </div>
 
     </div>
-
-  </div>
   </table>
+  </div>
+</div>
 
 
   <div class="container">
@@ -94,14 +97,14 @@
     <div class="row">
       <div class="col-lg-12">
         <table class="table" id="myTable1">
-          <thead class="thead-light"></thead>
+          <thead class="thead-light">
           <tr>
             <th scope="col">Buttons</th>
             <th scope="col">Date</th>
             <th scope="col">Description</th>
-            <th scope="col">Popularity</th>
-            <th scope="col" type="button" onclick="sortTable(2,1)">Votes</th>
-
+            <th scope="col"> </th>
+            <th scope="col" type="button" id="sort" onclick="sortTable(2,1)">Votes</th>
+          </thead>
 
 
             <tbody id='generatedEvents'>
