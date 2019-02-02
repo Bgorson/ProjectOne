@@ -1,18 +1,20 @@
-body{
+body {
     font-family: "Font Awesome 5 Free";
 }
+
 .container-fullwidth {
     padding-top: 1em;
 }
 
-.container{
+.container {
     color: white;
 }
+
 .navbar-dark {
-    background:#56b4d0;
+    background: #56b4d0;
 }
 
-.navbar-toggler-icon{
+.navbar-toggler-icon {
     color: white;
 }
 
@@ -25,11 +27,13 @@ body{
 .card {
     margin-top: 1em;
 }
-.buttons{
-    text-align:center;
+
+.buttons {
+    text-align: center;
 }
-.secondary-title{
-font-style: italic;   
+
+.secondary-title {
+    font-style: italic;
 }
 
 .nav-item {

@@ -40,15 +40,15 @@ $(".getLocal").on("click", function () {
 //=====User input Group name to pull from Firebase and load in div===============================
 
 $("#join").on("click", function () { // pulls from group object from firebase
-
-  var formInput = $(".form-control").val();
+  var originalInput = $(".form-control").val();
+  var formInput = $(".form-control").val().toLowerCase();
   groupRef.on('value', function (snapshot) {
     //console.log(snapshot.val());
     var databaseGroup = snapshot.val();
     if (databaseGroup[formInput]) { // checks if input is in firebase
-      $("#groupDisplay").css("color","black")
+      $("#groupDisplay").css("color", "black")
       var groupSelected = databaseGroup[formInput] // <-- This contains all object information about Group. Can pass to mainhub
-      $(".display-groups").html("<button class ='btn btn-info btn-lg'>Click here to access the "+ groupSelected.name + " Group</button>");
+      $(".display-groups").html("<button class ='btn btn-info btn-lg'>Click here to access the " + originalInput + " Group</button>");
 
       console.log(groupSelected.name);
       var groupName = groupSelected.name
@@ -60,7 +60,7 @@ $("#join").on("click", function () { // pulls from group object from firebase
       //console.log("here")
 
     } else {
-      $("#groupDisplay").css("color","red")
+      $("#groupDisplay").css("color", "red")
       $("#groupDisplay").text("We can't find your group")
     }
   })
