@@ -29,24 +29,15 @@ function setGroupInfo(groupName, eventCity, eventState, startDate, endDate) {
 var eventInfo = [];
 $('#submit').on("click", function (event) {
   event.preventDefault();
-
   var name = document.getElementById("name").value.toLowerCase();
   //sDate field
-  var sDateField = document.getElementById("start").value;
-  var sMonth = sDateField.slice(0, 2)
-  var sDay = sDateField.slice(3, 5)
-  var sYear = sDateField.slice(6, 10)
-  var sDate = sYear + "-" + sMonth + "-" + sDay
+  var sDate = document.getElementById("start").value;
   //eDate field 
-  var eDateField = document.getElementById("end").value;
-  eMonth = eDateField.slice(0, 2)
-  eDay = eDateField.slice(3, 5)
-  eYear = eDateField.slice(6, 10)
-  var eDate = eYear + "-" + eMonth + "-" + eDay
+  var eDate = document.getElementById("end").value;
   //location field
   var city = document.getElementById("city").value;
   var state = document.getElementById("state").value;
-  if (name == '' || sDateField == '' || eDateField == '' || city == '' || state == '') {
+  if (name == '' || sDate == '' || eDate == '' || city == '' || state == '') {
     $("#error").text("Please complete all fields")
     return false;
   }

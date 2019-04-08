@@ -60,3 +60,26 @@ $("#join").on("click", function () { // pulls from group object from firebase
 
 
 });
+//for each for all groups, dynamically create a table of data
+
+groupRef.once('value',function(snapshot){
+  snapshot.forEach(function(groupInfo){
+    var row = $("<tr class= 'groups' name= '"+groupInfo.val().name+"'></tr>")
+    var name= $("<td>"+groupInfo.val().name+ "</td>")
+    var date= $("<td>"+groupInfo.val().sDate+ "</td>")
+    var city= $("<td>"+groupInfo.val().city+ "</td>")
+    $(row).append(name,city,date)
+    console.log("group info " + groupInfo.val().name)
+    console.log(row)
+    $(".tableData").append(row)
+  })
+})
+
+$(document).on("click", ".groups",function(){
+  console.log('ready')
+  $(".groups").on("click", function(){
+    console.log($(this).attr("name"))
+    localStorage.setItem("groupName", $(this).attr("name"));
+    window.location.href = 'mainhub.html';
+  })
+})
