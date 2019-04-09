@@ -65,7 +65,7 @@ $("#join").on("click", function () { // pulls from group object from firebase
 groupRef.once('value',function(snapshot){
   snapshot.forEach(function(groupInfo){
     var row = $("<tr class= 'groups' name= '"+groupInfo.val().name+"'></tr>")
-    var name= $("<td>"+groupInfo.val().name+ "</td>")
+    var name= $("<td><button class= btn btn-info>"+groupInfo.val().name+ "</button></td>")
     var date= $("<td>"+groupInfo.val().sDate+ "</td>")
     var city= $("<td>"+groupInfo.val().city+ "</td>")
     $(row).append(name,city,date)
@@ -75,11 +75,10 @@ groupRef.once('value',function(snapshot){
   })
 })
 
-$(document).on("click", ".groups",function(){
+$(document).on("click", ".groups",function(event){
+  event.preventDefault();
   console.log('ready')
-  $(".groups").on("click", function(){
     console.log($(this).attr("name"))
     localStorage.setItem("groupName", $(this).attr("name"));
     window.location.href = 'mainhub.html';
-  })
 })
