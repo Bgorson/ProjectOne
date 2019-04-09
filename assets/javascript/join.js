@@ -13,6 +13,19 @@ firebase.initializeApp(config);
 var database = firebase.database();
 var groupRef = database.ref("group/")
 
+//Helper Functions
+
+var dateSwitch= function(date){
+  return (date.slice(5,7) +'-' +date.slice(8,10)+'-'+ date.slice(0,4))
+}
+var nameImprove= function(name){
+  return name.toLowerCase()
+  .split(' ')
+  .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+  .join(' ');
+}
+
+
 var eventInfo = localStorage.getItem("joinGroup");
 eventInfo = JSON.parse(eventInfo);
 if (eventInfo == undefined) {
@@ -45,7 +58,7 @@ $("#join").on("click", function () { // pulls from group object from firebase
     if (databaseGroup[formInput]) { // checks if input is in firebase
       $("#groupDisplay").css("color", "black")
       var groupSelected = databaseGroup[formInput] // <-- This contains all object information about Group. Can pass to mainhub
-      $(".display-groups").html("<button class ='btn btn-info btn-lg'>Click here to access the " + originalInput + " Group</button>");
+      $(".display-groups").html("<button class ='btn btn-info btn-lg'>Click here to access the " + nameImprove(originalInput) + " Group</button>");
       var groupName = groupSelected.name
       localStorage.setItem("groupName", groupName)
       $('.display-groups').click(function () {
@@ -62,11 +75,13 @@ $("#join").on("click", function () { // pulls from group object from firebase
 });
 //for each for all groups, dynamically create a table of data
 
+
+
 groupRef.once('value',function(snapshot){
   snapshot.forEach(function(groupInfo){
     var row = $("<tr class= 'groups' name= '"+groupInfo.val().name+"'></tr>")
-    var name= $("<td><button class= btn btn-info>"+groupInfo.val().name+ "</button></td>")
-    var date= $("<td>"+groupInfo.val().sDate+ "</td>")
+    var name= $("<td><button class= btn btn-info>"+nameImprove(groupInfo.val().name)+ "</button></td>")
+    var date= $("<td>"+dateSwitch(groupInfo.val().sDate)+ "</td>")
     var city= $("<td>"+groupInfo.val().city+ "</td>")
     $(row).append(name,city,date)
     console.log("group info " + groupInfo.val().name)

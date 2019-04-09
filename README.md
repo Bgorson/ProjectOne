@@ -7,7 +7,7 @@
 
 Our goal is to reduce indecisiveness amongst friends and loved ones when trying to answer the million dollar question: "What should we do tonight?"
 
-https://bgorson.github.io/Ven-You/
+https://bgorson.github.io/ProjectOne/
 
 The Application is built with:
 ---------------------------------------------------
